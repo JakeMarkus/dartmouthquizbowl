@@ -28,6 +28,60 @@ function el(tag, attrs = {}, children = []) {
 
 // ── HOME ──────────────────────────────────────────────────────────────────────
 
+// Add these helpers somewhere above renderHome()
+
+function getCollageColumns(width) {
+  if (width < 640) return 2;
+  if (width < 980) return 3;
+  return 4;
+}
+
+function layoutCollage(collage) {
+  const items = Array.from(collage.querySelectorAll('.masonry-item'));
+  if (!items.length) return;
+
+  const gap = 16;
+  const width = collage.clientWidth;
+  const cols = getCollageColumns(width);
+  const colWidth = (width - gap * (cols - 1)) / cols;
+
+  const heights = Array(cols).fill(0);
+
+  items.forEach(item => {
+    const img = item.querySelector('img');
+    const ratio =
+      img && img.naturalWidth && img.naturalHeight
+        ? img.naturalHeight / img.naturalWidth
+        : 0.75; // fallback while an image is still loading
+
+    const itemHeight = colWidth * ratio;
+
+    let colIndex = 0;
+    for (let i = 1; i < cols; i++) {
+      if (heights[i] < heights[colIndex]) colIndex = i;
+    }
+
+    const left = colIndex * (colWidth + gap);
+    const top = heights[colIndex];
+
+    item.style.position = 'absolute';
+    item.style.left = `${left}px`;
+    item.style.top = `${top}px`;
+    item.style.width = `${colWidth}px`;
+
+    heights[colIndex] += itemHeight + gap;
+  });
+
+  collage.style.height = `${Math.max(...heights) - gap}px`;
+}
+
+function scheduleCollageLayout(collage) {
+  let raf = null;
+  return () => {
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => layoutCollage(collage));
+  };
+}
 function renderHome(data) {
   const heroTitle = document.getElementById('heroTitle');
   const heroBlurb = document.getElementById('heroBlurb');
@@ -40,22 +94,47 @@ function renderHome(data) {
   if (introTitle) introTitle.textContent = data.home.introTitle;
   if (introText)  introText.textContent  = data.home.introText;
 
-  if (collage && data.home.collage) {
+  if (collage && Array.isArray(data.home.collage)) {
     collage.innerHTML = '';
-    // Split photos into 3 columns for a masonry-style layout
-    const cols = [[], [], []];
-    data.home.collage.forEach((item, i) => cols[i % 3].push(item));
+    collage.classList.add('masonry-collage');
+    collage.style.position = 'relative';
+    collage.style.width = '100%';
 
-    cols.forEach(colItems => {
-      const colDiv = el('div', { class: 'masonry-col' });
-      colItems.forEach(item => {
-        const fig = el('figure', { class: 'masonry-item' });
-        const img = el('img', { src: item.src, alt: item.alt || '', loading: 'lazy' });
-        fig.append(img);
-        colDiv.append(fig);
+    const relayout = scheduleCollageLayout(collage);
+
+    data.home.collage.forEach(item => {
+      if (!item || !item.src) return;
+
+      const fig = document.createElement('figure');
+      fig.className = 'masonry-item';
+
+      const img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.alt || '';
+      img.loading = 'eager';
+      img.decoding = 'async';
+      img.style.display = 'block';
+      img.style.width = '100%';
+      img.style.height = 'auto';
+
+      img.addEventListener('load', relayout);
+      img.addEventListener('error', () => {
+        fig.remove();
+        relayout();
       });
-      collage.append(colDiv);
+
+      fig.appendChild(img);
+      collage.appendChild(fig);
     });
+
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(relayout);
+      ro.observe(collage);
+    } else {
+      window.addEventListener('resize', relayout);
+    }
+
+    relayout();
   }
 }
 

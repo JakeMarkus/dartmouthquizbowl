@@ -468,3 +468,20 @@ h1{font-size:clamp(2.2rem, 5vw, 4.6rem);line-height:1;letter-spacing:-.05em;marg
   .masonry-col:nth-child(3){display:flex}
   .quiz-card{padding:20px 16px 16px}
 }
+
+#masonry-collage,
+#masonry-collage img {
+  max-width: 100%;
+}
+
+.masonry-collage figure {
+  margin: 0 0 1rem;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+}
+
+.masonry-collage img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

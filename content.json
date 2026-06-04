@@ -10,16 +10,19 @@
     "introTitle": "What do we do?",
     "introText": "This layout is built to stay sleek, boxy, and easy to edit. Drop in your own photo links in the JSON, and the collage, tournament galleries, and people cards will update automatically.",
     "collage": [
-      { "src": "https://dartmouthquizbowl.org/IMG_0028.webp", "alt": "yee" },
-      { "src": "https://dartmouthquizbowl.org/IMG_3140.webp", "alt": "yee" },
-      { "src": "https://dartmouthquizbowl.org/IMG_3959.webp", "alt": "yee" },
-      { "src": "https://dartmouthquizbowl.org/IMG_5984.webp", "alt": "yee" },
-      { "src": "https://dartmouthquizbowl.org/IMG_6024.webp", "alt": "yee" },
-      { "src": "https://dartmouthquizbowl.org/IMG_5452.webp", "alt": "yee" },
-      { "src": "https://dartmouthquizbowl.org/IMG_3933.webp", "alt": "yee" },
-      { "src": "https://dartmouthquizbowl.org/IMG_1134.webp", "alt": "yee" },
-      { "src": "https://dartmouthquizbowl.org/IMG_3771.webp", "alt": "yee" },
-      { "src": "https://dartmouthquizbowl.org/IMG_3744.webp", "alt": "yee" }
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_0028.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_3140.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_3959.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_5984.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_2241.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_7308.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_6024.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_5452.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_3933.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_1134.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_3771.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_3744.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_6087.webp", "alt": "yee" }
 
     ]
   },
