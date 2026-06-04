@@ -1,0 +1,179 @@
+{
+  "site": {
+    "name": "Dartmouth Quizbowl",
+    "tagline": "Fast buzzes, deep cuts, and a suspiciously large stack of packets.",
+    "logoText": "DQB"
+  },
+  "home": {
+    "heroTitle": "Dartmouth Quizbowl",
+    "heroBlurb": "We are a team of readers, rivals, and trivia enthusiasts—home to fast buzzes, deep cuts, and a campus full of strange, beautiful knowledge.",
+    "introTitle": "What do we do?",
+    "introText": "This layout is built to stay sleek, boxy, and easy to edit. Drop in your own photo links in the JSON, and the collage, tournament galleries, and people cards will update automatically.",
+    "collage": [
+      { "src": "https://picsum.photos/seed/dqb-1/900/1200", "alt": "Quizbowl teammates at a table" },
+      { "src": "https://picsum.photos/seed/dqb-2/1200/800", "alt": "Club photo on campus" },
+      { "src": "https://picsum.photos/seed/dqb-3/1000/1000", "alt": "Action shot at a tournament" },
+      { "src": "https://picsum.photos/seed/dqb-4/900/1200", "alt": "Another vertical club photo" },
+      { "src": "https://picsum.photos/seed/dqb-5/1200/800", "alt": "Horizontal team photo" },
+      { "src": "https://picsum.photos/seed/dqb-6/800/1200", "alt": "A portrait-style club moment" },
+      { "src": "https://picsum.photos/seed/dqb-7/1200/800", "alt": "Another wide Dartmouth photo" },
+      { "src": "https://picsum.photos/seed/dqb-7/1200/800", "alt": "Another wide Dartmouth photo" },
+      { "src": "https://picsum.photos/seed/dqb-8/1000/1400", "alt": "Tall candid at a tournament" }
+    ]
+  },
+  "quiz": [
+    {
+      "question": "This composer wrote the opera 'The Magic Flute' and Symphony No. 41, nicknamed the 'Jupiter.'",
+      "choices": ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Franz Joseph Haydn", "Franz Schubert"],
+      "answer": 1
+    },
+    {
+      "question": "After surviving Captain Cook's voyage, Dartmouth's John Ledyard accidentally poisoned himself by this river where his lost grave is said to lie.",
+      "choices": ["Conneticut", "Amazon", "Nile", "Ganges"],
+      "answer": 2
+    },
+    {
+      "question": "Because of local federalist tendencies, Dartmouth's cemetery does NOT contain the final resting place of a veteran from this early American conflict.",
+      "choices": ["Revolutionary War", "War of 1812", "Mexican-American War", "Civil War"],
+      "answer": 1
+    },
+    {
+      "question": "Dartmouth is home to the nation's oldest local fraternity, Kappa Pi Kappa, founded in what year?",
+      "choices": ["1842", "1893", "1902", "1822"],
+      "answer": 0    
+    },
+    {
+      "question": "The voice in Dartmouth's motto, \"Vox Clamatis in Deserto\", alludes to this biblical figure. Stained glass windows depict Eleazer Wheelock dressed as this figure in both Rollins chapel and a bathroom in Bartlett Hall.",
+      "choices": ["Thomas the Apostle", "John the Baptist", "Moses", "Jesus"],
+      "answer": 1
+    },
+    {
+      "question": "A cannon from this conflict was found under the football bleachers in 2008 after a Dartmouth alumnus confessed a 1960's theft from a Vermont veterans' home.",
+      "choices": ["WWI", "Civil War", "Korean War", "Spanish-American War"],
+      "answer": 0
+    },
+    {
+      "question": "This figure wrote in a letter to Dartmouth's then president: \"I cannot but hope the institution will become still more flourishing and extensively useful.\"",
+      "choices": ["Queen Victoria", "John D. Rockefeller", "Karl Marx", "George Washington"],
+      "answer": 3
+    },
+    {
+      "question": "The famous poet \"Bobby\" Frost was a member of which Dartmouth fraternity?",
+      "choices": ["Herot", "Kappa Pi Kappa", "Theta Delta Chi", "Chi Gamma Epsilon"],
+      "answer": 2
+    },
+    {
+      "question": "Dartmouth Hall has burned down this many times.",
+      "choices": ["1", "2", "3", "4"],
+      "answer": 1
+    },
+    {
+      "question": "The Samson Occom and Eleazar Wheelock were two \"Liberty\" cargo ships in this American conflict.",
+      "choices": ["WWI", "WWII", "The Gulf War", "The Vietnam War"],
+      "answer": 1
+    },
+
+    {
+      "question": "75 disgruntled Dartmouth students completely demolished what campus icon in what year?",
+      "choices": ["Ledyard Bridge, 1948", "Bartlett tower, 1929", "Dartmouth Hall, 1789", "The unburned bonfire, 2000"],
+      "answer": 2
+    },
+    {
+      "question": "This element, atomic number 79, is represented by the symbol Au, derived from the Latin 'aurum.'",
+      "choices": ["Silver", "Platinum", "Gold", "Copper"],
+      "answer": 2
+    },
+    {
+      "question": "This author wrote 'Crime and Punishment' and 'The Brothers Karamazov,' two cornerstones of Russian literature.",
+      "choices": ["Leo Tolstoy", "Ivan Turgenev", "Fyodor Dostoevsky", "Anton Chekhov"],
+      "answer": 2
+    },
+    {
+      "question": "The Battle of Hastings in 1066 resulted in the conquest of England by this duke from northern France.",
+      "choices": ["Richard the Lionheart", "William the Conqueror", "Charles Martel", "Rollo of Normandy"],
+      "answer": 1
+    },
+    {
+      "question": "This painter, known for 'The Persistence of Memory,' was a leading figure in the Surrealist movement.",
+      "choices": ["René Magritte", "Max Ernst", "Salvador Dalí", "Giorgio de Chirico"],
+      "answer": 2
+    },
+    {
+      "question": "In chemistry, this law states that the pressure of a gas is inversely proportional to its volume at constant temperature.",
+      "choices": ["Charles's Law", "Avogadro's Law", "Gay-Lussac's Law", "Boyle's Law"],
+      "answer": 3
+    },
+    {
+      "question": "This Shakespeare play features the characters Rosencrantz and Guildenstern, childhood friends of the Danish prince.",
+      "choices": ["Macbeth", "Othello", "Hamlet", "King Lear"],
+      "answer": 2
+    },
+    {
+      "question": "The Pythagorean theorem applies to this specific type of triangle, relating the squares of its three sides.",
+      "choices": ["Equilateral", "Isosceles", "Obtuse", "Right"],
+      "answer": 3
+    }
+  ],
+  "tournaments": [
+    {
+      "name": "Winter Invitational",
+      "description": "A brisk weekend of packets, precision, and caffeinated redemption. This is a placeholder description that you can replace with your own event summary, results, or highlight reel.",
+      "photos": [
+        { "src": "https://picsum.photos/seed/winter-invitational-1/1200/800", "caption": "Team huddles between rounds." },
+        { "src": "https://picsum.photos/seed/winter-invitational-2/800/1200", "caption": "A proud scoreboard moment." },
+        { "src": "https://picsum.photos/seed/winter-invitational-3/1200/800", "caption": "The room settles in for another tossup." }
+      ]
+    },
+    {
+      "name": "Spring Open",
+      "description": "Our spring tournament with a lighter mood, a few surprises, and a lot of good-natured competition.",
+      "photos": [
+        { "src": "https://picsum.photos/seed/spring-open-1/1200/800", "caption": "Warm light, cold buzzers." },
+        { "src": "https://picsum.photos/seed/spring-open-2/800/1200", "caption": "A vertical shot of the action." },
+        { "src": "https://picsum.photos/seed/spring-open-3/1200/800", "caption": "Post-round debate in the hallway." },
+        { "src": "https://picsum.photos/seed/spring-open-4/1200/800", "caption": "Another angle from the same excellent chaos." }
+      ]
+    }
+  ],
+  "people": {
+    "current": [
+      {
+        "name": "Jake Markus",
+        "title": "President",
+        "bio": "Nicknamed the \"Pentagon,\" Jake enjoys history and engineering tossups.",
+        "photo": "headshot.jpg"
+      },
+      {
+        "name": "William Parocai",
+        "title": "Vice President",
+        "bio": "Hello, my name is Will ‘27 I am a Government and Earth Sciences Major and the Vice President (future President?) of Dartmouth Quiz Bowl. I am a generalist and my favourite topic is US/Canadian Geography. (DO NOT remove my British spelling convention)",
+        "photo": "IMG_8726 - William Parocai.jpeg"
+      },
+      {
+        "name": "Audrey Evans",
+        "title": "Secretary",
+        "bio": "Audrey is mostly known for powering music tossups and forgetting to send weekly emails.",
+        "photo": "IMG_7887 - Audrey Evans.jpeg"
+      },
+      {
+        "name": "Elliott Gomes",
+        "title": "Treasurer",
+        "bio": "Priya keeps the club organized, the calendars accurate, and the chaos politely contained. Her sense of timing is strong enough to survive both tournament weekends and room changes.",
+        "photo": "gomes.jpg"
+      }
+    ],
+    "alumni": [
+      {
+        "name": "Alexander Clarke '25",
+        "title": "Founder, Ex-President, \n\n\"First Consul for Life\"",
+        "bio": "Alexander Clarke '25 founded the Dartmouth Student Quizbowl Team in Fall 2021 and served as President for the next four years. Before he graduated, his interests included classical literature (though he still hasn't learned Latin or Ancient Greek), European history, and evolutionary biology. Though he now plays trivia as a graduate student at Yale, he is still a loyal child of the College on the Hill and is recognized as the Quizbowl Team's First Consul for Life.",
+        "photo": "AlexClarke - Alexander Clarke.jpeg"
+      }
+    ]
+  },
+  "contacts": [
+    { "label": "Email", "value": "quizbowl@dartmouth.edu", "href": "mailto:quizbowl@dartmouth.edu" },
+    { "label": "Instagram", "value": "@dartmouthquizbowl", "href": "https://instagram.com" },
+    { "label": "Discord", "value": "Dartmouth Quizbowl", "href": "#" }
+  ]
+}

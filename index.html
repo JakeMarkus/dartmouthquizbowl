@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dartmouth Quizbowl</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="site.js"></script>
+</head>
+<body data-page="home">
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="wrap topbar-inner">
+        <a class="brand" href="index.html">
+          <div class="brand-mark">
+            <img src="logo.jpg" alt="Dartmouth Quizbowl logo" />
+          </div>
+          <div>Dartmouth Quizbowl</div>
+        </a>
+        <nav class="nav">
+          <a href="index.html" data-page="home">Home</a>
+          <a href="tournaments.html" data-page="tournaments">Tournaments</a>
+          <a href="people.html" data-page="people">People</a>
+          <a href="contact.html" data-page="contact">Get in touch!</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+
+      <section class="hero-new">
+        <div class="wrap hero-new-inner">
+          <div class="hero-text">
+            <div class="kicker">Quizbowl at Dartmouth</div>
+            <h1 id="heroTitle"></h1>
+            <p id="heroBlurb"></p>
+            <a href="contact.html" class="hero-cta">Join the team &rarr;</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="intro-strip">
+        <div class="wrap">
+          <div class="intro-text-block">
+            <h2 id="introTitle"></h2>
+            <p id="introText"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="collage-section">
+        <div class="wrap">
+          <div class="masonry-collage" id="collage"></div>
+        </div>
+      </section>
+
+      <section class="section quiz-section">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <h2>Test your knowledge</h2>
+              <p>A random question from our packet archive. Get it right to see the next one.</p>
+            </div>
+          </div>
+          <div id="quizContainer" class="quiz-container"></div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <div class="wrap small">Dartmouth Quizbowl &bull; Static site ready for Cloudflare Pages</div>
+    </footer>
+  </div>
+</body>
+</html>
