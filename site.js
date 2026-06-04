@@ -31,9 +31,9 @@ function el(tag, attrs = {}, children = []) {
 // Add these helpers somewhere above renderHome()
 
 function getCollageColumns(width) {
-  if (width < 640) return 2;
-  if (width < 980) return 3;
-  return 4;
+  if (width < 640) return 1;
+  if (width < 980) return 2;
+  return 3;
 }
 
 function layoutCollage(collage) {
