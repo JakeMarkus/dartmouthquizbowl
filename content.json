@@ -127,7 +127,7 @@
       "description": "Someone write something here lol",
       "photos": [
         { "src": "https://aura.dartmouthquizbowl.org/IMG_0028.webp", "caption": "The Dartmouth Teams assemble, with a photobomb from South Connecitcut State (bottom right)" },
-        { "src": "https://aura.dartmouthquizbowl.org/IMG_0033.webp", "caption": "Dartmouth's Team A: Jackson Price '28, Elliott Gomes '28, Rajiv Pujara '29, and Ayaan Jajodia '29" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_0033.webp", "caption": "Dartmouth's Team A: Jackson P. '28, Elliott G. '28, Rjiv P. '29, & Ayaan J. '29" },
         { "src": "https://aura.dartmouthquizbowl.org/IMG_5452.webp", "caption": "Our old founder Alexander Clarke '25, now a grad student at Yale, moderates the fierce intra-Dartmouth round!" },
         { "src": "https://aura.dartmouthquizbowl.org/IMG_5456.webp", "caption": "DSQBT commands the largest table at a rural olive garden for the postgame feast." }      ]
     },
@@ -141,11 +141,24 @@
         { "src": "https://picsum.photos/seed/spring-open-4/1200/800", "caption": "Another angle from the same excellent chaos." }
       ]
     }, 
+
     {
-      "name": "ICT Nationals, Chicago 2025",
+      "name": "ACF Fall @ MIT, 2025",
+      "description": ".",
+      "photos": [
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3140.webp", "caption": "The whole gang in front of the great dome." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3146.webp", "caption": "Team A: Elliott G. '28, Alice Z. '29, & William K. '29" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3149.webp", "caption": "Team B: Jackson P '28, Ayaan J '29, Micah L '29, & Jake M '26" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3155.webp", "caption": "Team C: William B. '29, Taiki T. '29, & Kaushik R. '29" }, 
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3160.webp", "caption": "Supporting personel Rajiv P. '29, Matt F. '29, & William P. '27" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3156.webp", "caption": "Our team augur recieves excellent premonitions." }        
+      ]
+    }, 
+    {
+      "name": "NAQT Nationals (ICT), Chicago 2025",
       "description": "",
       "photos": [
-        { "src": "https://aura.dartmouthquizbowl.org/image5.webp", "caption": "Alexander Clarke '25, William Parocai '27, Audrey Evans '28, and Lucia Li '28 represent Dartmouth at nats!" },
+        { "src": "https://aura.dartmouthquizbowl.org/image5.webp", "caption": "Alexander C. '25, William P. '27, Audrey E. '28, & Lucia L. '28 represent Dartmouth at nats!" },
         { "src": "https://aura.dartmouthquizbowl.org/image6.webp", "caption": "Locked in 🔒" },
         { "src": "https://aura.dartmouthquizbowl.org/image7.webp", "caption": "Hotel carpet, man." }
 
@@ -189,7 +202,7 @@
       },
       {
         "name": "Alexander Clarke '25",
-        "title": "Founder, Ex-President (2021-25), \n\n\"First Consul for Life\"",
+        "title": "Founder, Ex-President (2021-25)",
         "bio": "Alexander Clarke '25 founded the Dartmouth Student Quizbowl Team in Fall 2021 and served as President for the next four years. Before he graduated, his interests included classical literature (though he still hasn't learned Latin or Ancient Greek), European history, and evolutionary biology. Though he now plays trivia as a graduate student at Yale, he is still a loyal child of the College on the Hill and is recognized as the Quizbowl Team's First Consul for Life.",
         "photo": "https://aura.dartmouthquizbowl.org/AlexClarke%20-%20Alexander%20Clarke.webp"
       }
