@@ -22,7 +22,8 @@
       { "src": "https://aura.dartmouthquizbowl.org/IMG_1134.webp", "alt": "yee" },
       { "src": "https://aura.dartmouthquizbowl.org/IMG_3771.webp", "alt": "yee" },
       { "src": "https://aura.dartmouthquizbowl.org/IMG_3744.webp", "alt": "yee" },
-      { "src": "https://aura.dartmouthquizbowl.org/IMG_6087.webp", "alt": "yee" }
+      { "src": "https://aura.dartmouthquizbowl.org/IMG_6087.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/histone.webp", "alt": "yee" }
 
     ]
   },
@@ -143,36 +144,42 @@
   "people": {
     "current": [
       {
-        "name": "Jake Markus",
-        "title": "President",
-        "bio": "Nicknamed the \"Pentagon,\" Jake enjoys history and engineering tossups.",
-        "photo": "headshot.jpg"
-      },
-      {
         "name": "William Parocai",
-        "title": "Vice President",
-        "bio": "Hello, my name is Will ‘27 I am a Government and Earth Sciences Major and the Vice President (future President?) of Dartmouth Quiz Bowl. I am a generalist and my favourite topic is US/Canadian Geography. (DO NOT remove my British spelling convention)",
-        "photo": "IMG_8726 - William Parocai.jpeg"
+        "title": "President",
+        "bio": "Hello, my name is Will ‘27 I am a Government and Earth Sciences Major and the President of Dartmouth Quiz Bowl. I am a generalist and my favourite topic is US/Canadian Geography. (DO NOT remove my British spelling convention)",
+        "photo": "https://aura.dartmouthquizbowl.org/IMG_8726%20-%20William%20Parocai.webp"
       },
       {
         "name": "Audrey Evans",
-        "title": "Secretary",
+        "title": "Vice President",
         "bio": "Audrey is mostly known for powering music tossups and forgetting to send weekly emails.",
-        "photo": "IMG_7887 - Audrey Evans.jpeg"
+        "photo": "https://aura.dartmouthquizbowl.org/IMG_7887%20-%20Audrey%20Evans.webp"
       },
       {
         "name": "Elliott Gomes",
+        "title": "Secretary",
+        "bio": "How many L's? How many T's? All I know is Gomes brings that party (because he has yet to send me a blurb).",
+        "photo": "https://aura.dartmouthquizbowl.org/gomes.webp"
+      },
+      {
+        "name": "Rajiv Pujara",
         "title": "Treasurer",
-        "bio": "Priya keeps the club organized, the calendars accurate, and the chaos politely contained. Her sense of timing is strong enough to survive both tournament weekends and room changes.",
-        "photo": "gomes.jpg"
+        "bio": "Rajiv is a '29 studying Economics, with Quiz Bowl specialties in Visual Fine Arts and Philosophy. He loves stopping by The Everyday Cafe before tournaments!",
+        "photo": "https://aura.dartmouthquizbowl.org/Screenshot%202026-04-09%20at%204.19.54%E2%80%AFPM%20-%20Rajiv%20Pujara.webp"
       }
     ],
     "alumni": [
       {
+        "name": "Jake Markus '26",
+        "title": "Ex-President (2024-26), \"Pentagon\"",
+        "bio": "Nicknamed the  enjoys history and engineering tossups.",
+        "photo": "https://aura.dartmouthquizbowl.org/IMG_8792.webp"
+      },
+      {
         "name": "Alexander Clarke '25",
-        "title": "Founder, Ex-President, \n\n\"First Consul for Life\"",
+        "title": "Founder, Ex-President (2021-25), \n\n\"First Consul for Life\"",
         "bio": "Alexander Clarke '25 founded the Dartmouth Student Quizbowl Team in Fall 2021 and served as President for the next four years. Before he graduated, his interests included classical literature (though he still hasn't learned Latin or Ancient Greek), European history, and evolutionary biology. Though he now plays trivia as a graduate student at Yale, he is still a loyal child of the College on the Hill and is recognized as the Quizbowl Team's First Consul for Life.",
-        "photo": "AlexClarke - Alexander Clarke.jpeg"
+        "photo": "https://aura.dartmouthquizbowl.org/AlexClarke%20-%20Alexander%20Clarke.webp"
       }
     ]
   },
