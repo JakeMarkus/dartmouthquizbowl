@@ -10,15 +10,17 @@
     "introTitle": "What do we do?",
     "introText": "This layout is built to stay sleek, boxy, and easy to edit. Drop in your own photo links in the JSON, and the collage, tournament galleries, and people cards will update automatically.",
     "collage": [
-      { "src": "https://picsum.photos/seed/dqb-1/900/1200", "alt": "Quizbowl teammates at a table" },
-      { "src": "https://picsum.photos/seed/dqb-2/1200/800", "alt": "Club photo on campus" },
-      { "src": "https://picsum.photos/seed/dqb-3/1000/1000", "alt": "Action shot at a tournament" },
-      { "src": "https://picsum.photos/seed/dqb-4/900/1200", "alt": "Another vertical club photo" },
-      { "src": "https://picsum.photos/seed/dqb-5/1200/800", "alt": "Horizontal team photo" },
-      { "src": "https://picsum.photos/seed/dqb-6/800/1200", "alt": "A portrait-style club moment" },
-      { "src": "https://picsum.photos/seed/dqb-7/1200/800", "alt": "Another wide Dartmouth photo" },
-      { "src": "https://picsum.photos/seed/dqb-7/1200/800", "alt": "Another wide Dartmouth photo" },
-      { "src": "https://picsum.photos/seed/dqb-8/1000/1400", "alt": "Tall candid at a tournament" }
+      { "src": "https://dartmouthquizbowl.org/IMG_0028.webp", "alt": "yee" },
+      { "src": "https://dartmouthquizbowl.org/IMG_3140.webp", "alt": "yee" },
+      { "src": "https://dartmouthquizbowl.org/IMG_3959.webp", "alt": "yee" },
+      { "src": "https://dartmouthquizbowl.org/IMG_5984.webp", "alt": "yee" },
+      { "src": "https://dartmouthquizbowl.org/IMG_6024.webp", "alt": "yee" },
+      { "src": "https://dartmouthquizbowl.org/IMG_5452.webp", "alt": "yee" },
+      { "src": "https://dartmouthquizbowl.org/IMG_3933.webp", "alt": "yee" },
+      { "src": "https://dartmouthquizbowl.org/IMG_1134.webp", "alt": "yee" },
+      { "src": "https://dartmouthquizbowl.org/IMG_3771.webp", "alt": "yee" },
+      { "src": "https://dartmouthquizbowl.org/IMG_3744.webp", "alt": "yee" }
+
     ]
   },
   "quiz": [
