@@ -25,7 +25,9 @@
       { "src": "https://aura.dartmouthquizbowl.org/IMG_3771.webp", "alt": "yee" },
       { "src": "https://aura.dartmouthquizbowl.org/IMG_3744.webp", "alt": "yee" },
       { "src": "https://aura.dartmouthquizbowl.org/IMG_6087.webp", "alt": "yee" },
-      { "src": "https://aura.dartmouthquizbowl.org/histone.webp", "alt": "yee" }
+      { "src": "https://aura.dartmouthquizbowl.org/histone.webp", "alt": "yee" },
+      { "src": "https://aura.dartmouthquizbowl.org/logo.webp", "alt": "yee" }
+
     ]
   },
   "quiz": [
@@ -224,10 +226,11 @@
     ]
   },
   "contacts": [
-    { "label": "Email", "value": "Dartmouth.Student.QuizBowl.Team@dartmouth.edu", "href": "mailto:Dartmouth.Student.QuizBowl.Team@dartmouth.edu" },
+    { "label": "Dartmouth Student? Join the GroupMe:", "value": "Student Link", "href": "https://docs.google.com/document/d/1e0JXZ0R4d4hwA_1fOmqzwdPKNwPkvwKRyFxVmhzpTHo/edit?usp=sharing" },
     { "label": "Instagram", "value": "@dartmouthquizbowl", "href": "https://www.instagram.com/dartmouthquizbowl/" },
+    { "label": "Email", "value": "Dartmouth.Student.QuizBowl.Team@dartmouth.edu", "href": "mailto:Dartmouth.Student.QuizBowl.Team@dartmouth.edu" },
     { "label": "President's Contact", "value": "william.a.parocai.27@dartmouth.edu", "href": "#" },
-    { "label": "Secretary's Contact", "value": "william.a.parocai.27@dartmouth.edu", "href": "#" }
+    { "label": "Secretary's Contact", "value": "audrey.s.evans.28@dartmouth.edu", "href": "#" }
 
   ]
 }
