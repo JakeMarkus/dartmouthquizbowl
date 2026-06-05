@@ -124,7 +124,7 @@
   "tournaments": [
     {
       "name": "NAQT Regionals @Yale, 2026",
-      "description": "Someone write something here lol",
+      "description": "",
       "photos": [
         { "src": "https://aura.dartmouthquizbowl.org/IMG_0028.webp", "caption": "The Dartmouth Teams assemble, with a photobomb from South Connecitcut State (bottom right)" },
         { "src": "https://aura.dartmouthquizbowl.org/IMG_0033.webp", "caption": "Dartmouth's Team A: Jackson P. '28, Elliott G. '28, Rjiv P. '29, & Ayaan J. '29" },
@@ -133,7 +133,7 @@
     },
     {
       "name": "ACF Regionals @ BU, 2026",
-      "description": "Our spring tournament with a lighter mood, a few surprises, and a lot of good-natured competition.",
+      "description": "",
       "photos": [
         { "src": "https://picsum.photos/seed/spring-open-1/1200/800", "caption": "Warm light, cold buzzers." },
         { "src": "https://picsum.photos/seed/spring-open-2/800/1200", "caption": "A vertical shot of the action." },
@@ -143,8 +143,22 @@
     }, 
 
     {
+      "name": "MRNA @ Columbia, 2026",
+      "description": "",
+      "photos": [
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_6024.webp", "caption": "DSQBT poses outside of Butler library during lunch break." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_5984.webp", "caption": "Dartmouth's Team A and Team B play against each other. Team B wins!" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_5986.webp", "caption": "Elliott G. '28 & Rajiv P. '29 prepare in different ways." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_5522.webp", "caption": "DSQBT takes a detour to Times Square" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_6087.webp", "caption": "The sun sets outside before the final tossup." }
+
+      ]
+    }, 
+
+
+    {
       "name": "ACF Fall @ MIT, 2025",
-      "description": ".",
+      "description": "",
       "photos": [
         { "src": "https://aura.dartmouthquizbowl.org/IMG_3140.webp", "caption": "The whole gang in front of the great dome." },
         { "src": "https://aura.dartmouthquizbowl.org/IMG_3146.webp", "caption": "Team A: Elliott G. '28, Alice Z. '29, & William K. '29" },
@@ -209,8 +223,10 @@
     ]
   },
   "contacts": [
-    { "label": "Email", "value": "quizbowl@dartmouth.edu", "href": "mailto:quizbowl@dartmouth.edu" },
-    { "label": "Instagram", "value": "@dartmouthquizbowl", "href": "https://instagram.com" },
-    { "label": "Discord", "value": "Dartmouth Quizbowl", "href": "#" }
+    { "label": "Email", "value": "Dartmouth.Student.QuizBowl.Team@dartmouth.edu", "href": "mailto:Dartmouth.Student.QuizBowl.Team@dartmouth.edu" },
+    { "label": "Instagram", "value": "@dartmouthquizbowl", "href": "https://www.instagram.com/dartmouthquizbowl/" },
+    { "label": "President's Contact", "value": "william.a.parocai.27@dartmouth.edu", "href": "#" },
+    { "label": "Secretary's Contact", "value": "william.a.parocai.27@dartmouth.edu", "href": "#" }
+
   ]
 }
