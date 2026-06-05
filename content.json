@@ -123,6 +123,17 @@
   ],
   "tournaments": [
     {
+      "name": "MRNA @ Columbia, 2026",
+      "description": "",
+      "photos": [
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_6024.webp", "caption": "DSQBT poses outside of Butler library during lunch break." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_5984.webp", "caption": "Dartmouth's Team A and Team B play against each other. Team B wins!" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_5986.webp", "caption": "Elliott G. '28 & Rajiv P. '29 prepare in different ways." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_5522.webp", "caption": "DSQBT takes a detour to Times Square" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_6087.webp", "caption": "The sun sets outside before the final tossup." }
+      ]
+    }, 
+    {
       "name": "NAQT Regionals @Yale, 2026",
       "description": "",
       "photos": [
@@ -132,29 +143,19 @@
         { "src": "https://aura.dartmouthquizbowl.org/IMG_5456.webp", "caption": "DSQBT commands the largest table at a rural olive garden for the postgame feast." }      ]
     },
     {
-      "name": "ACF Regionals @ BU, 2026",
+      "name": "ACF Winter @ Harvard, 2025",
       "description": "",
       "photos": [
-        { "src": "https://picsum.photos/seed/spring-open-1/1200/800", "caption": "Warm light, cold buzzers." },
-        { "src": "https://picsum.photos/seed/spring-open-2/800/1200", "caption": "A vertical shot of the action." },
-        { "src": "https://picsum.photos/seed/spring-open-3/1200/800", "caption": "Post-round debate in the hallway." },
-        { "src": "https://picsum.photos/seed/spring-open-4/1200/800", "caption": "Another angle from the same excellent chaos." }
-      ]
-    }, 
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3959.webp", "caption": "The #1 Undergrad Trophy lifted by Matt F. '29, Audrey E. '28, Elliott G '28, Rajiv P. '29, & Micah L. '29!" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3949.webp", "caption": "The team poses in Harvard Yard with Jake M '26, who is moderating this tournament." },
+        { "src": "https://aura.dartmouthquizbowl.org/image3.webp", "caption": "We're so good at quizbowl it must be witchcraft." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3933.webp", "caption": "Jake M '26 moderates the Dartmouth-Harvard round. Big green leads at the half, but falls by 20." },
+        { "src": "https://aura.dartmouthquizbowl.org/image4.webp", "caption": "How many Dartmouth students does it take to carry a cup?" }
 
-    {
-      "name": "MRNA @ Columbia, 2026",
-      "description": "",
-      "photos": [
-        { "src": "https://aura.dartmouthquizbowl.org/IMG_6024.webp", "caption": "DSQBT poses outside of Butler library during lunch break." },
-        { "src": "https://aura.dartmouthquizbowl.org/IMG_5984.webp", "caption": "Dartmouth's Team A and Team B play against each other. Team B wins!" },
-        { "src": "https://aura.dartmouthquizbowl.org/IMG_5986.webp", "caption": "Elliott G. '28 & Rajiv P. '29 prepare in different ways." },
-        { "src": "https://aura.dartmouthquizbowl.org/IMG_5522.webp", "caption": "DSQBT takes a detour to Times Square" },
-        { "src": "https://aura.dartmouthquizbowl.org/IMG_6087.webp", "caption": "The sun sets outside before the final tossup." }
+
 
       ]
     }, 
-
 
     {
       "name": "ACF Fall @ MIT, 2025",
