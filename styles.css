@@ -24,7 +24,7 @@ img{display:block;max-width:100%}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
 .topbar{
   position:sticky;top:0;z-index:20;
-  background:rgba(244,239,230,.95);
+  background:rgba(3, 62, 21, 0.5);
   backdrop-filter: blur(10px);
   border-bottom:1px solid var(--line);
 }
