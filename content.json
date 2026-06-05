@@ -8,7 +8,7 @@
     "heroTitle": "Dartmouth Quizbowl",
     "heroBlurb": "Your Big Green trivia team. Find us playing universities nationwide, diving down a wiki rabbit hole, or in Collis for Sunday practice.",
     "introTitle": "What do we do?",
-    "introText": "Imagine Jeopardy, but with two teams of four. Anything and everything comes up! Come by practice and get a taste of the trivia thrill, our club is open to all Dartmouth Students.",
+    "introText": "Imagine Jeopardy, but with two teams of four. Anything and everything comes up! Come by practice and get a taste of the trivia thrill. Our club is open to all Dartmouth Students.",
     "collage": [
       { "src": "https://aura.dartmouthquizbowl.org/IMG_0028.webp", "alt": "yee" },
       { "src": "https://aura.dartmouthquizbowl.org/IMG_3140.webp", "alt": "yee" },
@@ -224,9 +224,9 @@
     ]
   },
   "contacts": [
-    { "label": "Dartmouth Student? Join the GroupMe:", "value": "Student Link", "href": "https://docs.google.com/document/d/1e0JXZ0R4d4hwA_1fOmqzwdPKNwPkvwKRyFxVmhzpTHo/edit?usp=sharing" },
+    { "label": "Club GroupMe:", "value": "Dartmouth Student Link (sign in!)", "href": "https://docs.google.com/document/d/1e0JXZ0R4d4hwA_1fOmqzwdPKNwPkvwKRyFxVmhzpTHo/edit?usp=sharing" },
     { "label": "Instagram", "value": "@dartmouthquizbowl", "href": "https://www.instagram.com/dartmouthquizbowl/" },
-    { "label": "Email", "value": "Dartmouth.Student.QuizBowl.Team@dartmouth.edu", "href": "mailto:Dartmouth.Student.QuizBowl.Team@dartmouth.edu" },
+    { "label": "Email", "value": "Dartmouth.Student.QuizBowl.Team@dartmouth.edu", "href": "#" },
     { "label": "President's Contact", "value": "william.a.parocai.27@dartmouth.edu", "href": "#" },
     { "label": "Secretary's Contact", "value": "audrey.s.evans.28@dartmouth.edu", "href": "#" }
 
