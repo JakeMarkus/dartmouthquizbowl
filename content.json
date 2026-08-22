@@ -50,12 +50,12 @@
       "answer": 0    
     },
     {
-      "question": "The voice in Dartmouth's motto, \"Vox Clamatis in Deserto\", alludes to this biblical figure. Stained glass windows depict Eleazer Wheelock dressed as this figure in both Rollins chapel and a bathroom in Bartlett Hall.",
+      "question": "The voice in Dartmouth's motto, \"Vox Clamatis in Deserto\", alludes to which biblical figure? Stained glass windows depict Eleazer Wheelock dressed as this figure in both Rollins chapel and a bathroom in Bartlett Hall.",
       "choices": ["Thomas the Apostle", "John the Baptist", "Moses", "Jesus"],
       "answer": 1
     },
     {
-      "question": "A cannon from this conflict was found under the football bleachers in 2008 after a Dartmouth alumnus confessed a 1960's theft from a Vermont veterans' home.",
+      "question": "A cannon from which conflict was found under the football bleachers in 2008 after a Dartmouth alumnus confessed stealing it from a veterans' home?",
       "choices": ["WWI", "Civil War", "Korean War", "Spanish-American War"],
       "answer": 0
     },
@@ -75,7 +75,7 @@
       "answer": 1
     },
     {
-      "question": "The Samson Occom and Eleazar Wheelock were two \"Liberty\" cargo ships in this American conflict.",
+      "question": "The Samson Occom and Eleazar Wheelock were two \"Liberty\" cargo ships in which American conflict?",
       "choices": ["WWI", "WWII", "The Gulf War", "The Vietnam War"],
       "answer": 1
     },
@@ -198,7 +198,7 @@
       {
         "name": "Elliott Gomes",
         "title": "Secretary",
-        "bio": "How many L's? How many T's? All I know is Gomes brings that party (because he has yet to send me a blurb).",
+        "bio": "How many L's? How many T's? All I know is Gomes brings that party (because he has yet to send Jake a blurb).",
         "photo": "https://aura.dartmouthquizbowl.org/gomes.webp"
       },
       {
@@ -211,13 +211,13 @@
     "alumni": [
       {
         "name": "Jacob Markus '26",
-        "title": "Ex-President (2024-26), \"The Pentagon\"",
-        "bio": "Jake enjoys long walks, history tossups, and \"antifloccinaucinihilipilification.\" Also Seattle, medtech, Chopin, golf, silly pictures with friends, museums, and not knowing what birds are called.",
+        "title": "Former President (2024-26)",
+        "bio": "Jake M. '26 decided the DSQBT could use a website and here we are. An engineer, Seattleite, and longtime 'bowler, Jake is returning to Hanover to pursue an engineering masters degree. His favorite parts of competition are knowing a suprise outside his specialty, matching shirts with Elliott G., and driving back with everyone to the middle of nowhere.",
         "photo": "https://aura.dartmouthquizbowl.org/IMG_8792.webp"
       },
       {
         "name": "Alexander Clarke '25",
-        "title": "Founder, Ex-President (2021-25)",
+        "title": "Founder, Former President (2021-25)",
         "bio": "Alexander Clarke '25 founded the Dartmouth Student Quizbowl Team in Fall 2021 and served as President for the next four years. Before he graduated, his interests included classical literature (though he still hasn't learned Latin or Ancient Greek), European history, and evolutionary biology. Though he now plays trivia as a graduate student at Yale, he is still a loyal child of the College on the Hill and is recognized as the Quizbowl Team's First Consul for Life.",
         "photo": "https://aura.dartmouthquizbowl.org/AlexClarke%20-%20Alexander%20Clarke.webp"
       }
