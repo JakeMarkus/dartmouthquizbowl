@@ -30,7 +30,7 @@
   },
   "quiz": [
     {
-      "question": "This composer wrote the opera 'The Magic Flute' and Symphony No. 41, nicknamed the 'Jupiter.'",
+      "question": "Which composer wrote The Magic Flute and met his pet starling bird when it sang his Piano Concerto No. 17 in G?",
       "choices": ["Ludwig van Beethoven", "Wolfgang Amadeus Mozart", "Franz Joseph Haydn", "Franz Schubert"],
       "answer": 1
     },
@@ -40,7 +40,7 @@
       "answer": 2
     },
     {
-      "question": "Because of local federalist tendencies, Dartmouth's cemetery does NOT contain the final resting place of a veteran from this early American conflict.",
+      "question": "Because of local federalist tendencies, Dartmouth's cemetery does NOT contain the final resting place of a veteran from which early American conflict?",
       "choices": ["Revolutionary War", "War of 1812", "Mexican-American War", "Civil War"],
       "answer": 1
     },
@@ -60,7 +60,7 @@
       "answer": 0
     },
     {
-      "question": "This figure wrote in a letter to Dartmouth's then president: \"I cannot but hope the institution will become still more flourishing and extensively useful.\"",
+      "question": "Which figure wrote in a letter to Dartmouth's then president: \"I cannot but hope the institution will become still more flourishing and extensively useful.\"?",
       "choices": ["Queen Victoria", "John D. Rockefeller", "Karl Marx", "George Washington"],
       "answer": 3
     },
@@ -70,7 +70,7 @@
       "answer": 2
     },
     {
-      "question": "Dartmouth Hall has burned down this many times.",
+      "question": "Dartmouth Hall has burned down how many times?",
       "choices": ["1", "2", "3", "4"],
       "answer": 1
     },
@@ -86,39 +86,45 @@
       "answer": 2
     },
     {
-      "question": "This element, atomic number 79, is represented by the symbol Au, derived from the Latin 'aurum.'",
-      "choices": ["Silver", "Platinum", "Gold", "Copper"],
-      "answer": 2
+      "question": "Before the battle of Hastings, what did the court jester Taillefer do while juggling with his sword on horseback before the English line?",
+      "choices": ["Pretend to fall before the charge", "Sing the Song of Roland", "Wear a tunic painted with William's face", "Yell insults & obscenities"],
+      "answer": 1
     },
     {
-      "question": "This author wrote 'Crime and Punishment' and 'The Brothers Karamazov,' two cornerstones of Russian literature.",
+      "question": "Which author wrote 'Crime and Punishment' and 'The Brothers Karamazov'?",
       "choices": ["Leo Tolstoy", "Ivan Turgenev", "Fyodor Dostoevsky", "Anton Chekhov"],
       "answer": 2
     },
     {
-      "question": "The Battle of Hastings in 1066 resulted in the conquest of England by this duke from northern France.",
-      "choices": ["Richard the Lionheart", "William the Conqueror", "Charles Martel", "Rollo of Normandy"],
+      "question": "In 1966, students put posters on the Baker clock tower to turn it into which character?",
+      "choices": ["The Lorax", "Mickey Mouse", "Winnie the Pooh", "Johnny Appleseed"],
       "answer": 1
     },
     {
-      "question": "This painter, known for 'The Persistence of Memory,' was a leading figure in the Surrealist movement.",
+      "question": "Which painter is known for 'The Persistence of Memory' and was a leading figure in the Surrealist movement?",
       "choices": ["René Magritte", "Max Ernst", "Salvador Dalí", "Giorgio de Chirico"],
       "answer": 2
     },
     {
-      "question": "In chemistry, this law states that the pressure of a gas is inversely proportional to its volume at constant temperature.",
-      "choices": ["Charles's Law", "Avogadro's Law", "Gay-Lussac's Law", "Boyle's Law"],
-      "answer": 3
-    },
-    {
-      "question": "This Shakespeare play features the characters Rosencrantz and Guildenstern, childhood friends of the Danish prince.",
+      "question": "Which Shakespeare play features the characters Rosencrantz and Guildenstern, childhood friends of a certain Danish prince?",
       "choices": ["Macbeth", "Othello", "Hamlet", "King Lear"],
       "answer": 2
     },
     {
-      "question": "The Pythagorean theorem applies to this specific type of triangle, relating the squares of its three sides.",
-      "choices": ["Equilateral", "Isosceles", "Obtuse", "Right"],
-      "answer": 3
+      "question": "Which mythical creature did chemist August Kekulé claim to see in an 1865 dream, inspiring him to discover the shape of Benzene molecules?",
+      "choices": ["The Hydra", "The Ouroboros", "Cerberus", "Chichevache"],
+      "answer": 1
+    },
+    {
+      "question": "Which reconstructed language is said to be a common ancestor of Greek, Latin, Hindi, and more?",
+      "choices": ["Proto-Indo-European (PIE)", "Sanskrit", "Phoenician", "Southern Gibberish"],
+      "answer": 0
+    }
+    ,
+    {
+      "question": "Which famous scientist explained the photoelectric effect in 1905 by proposing light is made of tiny energy packets called photons?",
+      "choices": ["Albert Einstein", "Erwin Schrodinger", "Werner Heisenberg", "Max Planck"],
+      "answer": 0
     }
   ],
   "tournaments": [

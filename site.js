@@ -281,6 +281,47 @@ function launchConfetti(card) {
 
 // ── TOURNAMENTS ───────────────────────────────────────────────────────────────
 
+function scrollCarouselToSlide(track, direction) {
+  const slides = Array.from(track.querySelectorAll('.slide'));
+  if (!slides.length) return;
+  const maxScroll = track.scrollWidth - track.clientWidth;
+
+  const trackRect = track.getBoundingClientRect();
+  const trackCenter = trackRect.left + trackRect.width / 2;
+  let nearestIndex = 0;
+  let nearestDistance = Infinity;
+
+  const storedIndex = Number(track.dataset.activeSlide);
+  if (Number.isInteger(storedIndex) && storedIndex >= 0 && storedIndex < slides.length) {
+    nearestIndex = storedIndex;
+  } else if (track.scrollLeft <= 1) {
+    nearestIndex = 0;
+  } else if (track.scrollLeft >= maxScroll - 1) {
+    nearestIndex = slides.length - 1;
+  } else {
+    slides.forEach((slide, index) => {
+      const slideRect = slide.getBoundingClientRect();
+      const slideCenter = slideRect.left + slideRect.width / 2;
+      const distance = Math.abs(slideCenter - trackCenter);
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestIndex = index;
+      }
+    });
+  }
+
+  const nextIndex = Math.max(0, Math.min(slides.length - 1, nearestIndex + direction));
+  const targetSlide = slides[nextIndex];
+  const targetRect = targetSlide.getBoundingClientRect();
+  let left = track.scrollLeft + targetRect.left - trackRect.left - (track.clientWidth - targetSlide.clientWidth) / 2;
+
+  if (nextIndex === 0) left = 0;
+  if (nextIndex === slides.length - 1) left = maxScroll;
+
+  track.dataset.activeSlide = String(nextIndex);
+  track.scrollTo({ left, behavior: 'smooth' });
+}
+
 function renderTournaments(data) {
   const root = document.getElementById('tournaments');
   if (!root) return;
@@ -296,7 +337,14 @@ function renderTournaments(data) {
       const slide = el('article', { class: 'slide' });
       const inner = el('div', { class: 'slide-inner' });
       const frame = el('div', { class: 'slide-frame' });
-      frame.append(el('img', { src: photo.src, alt: photo.caption || t.name }));
+      const img = el('img', { src: photo.src, alt: photo.caption || t.name, decoding: 'async' });
+      img.addEventListener('load', () => {
+        if (!img.naturalWidth || !img.naturalHeight) return;
+        slide.style.setProperty('--slide-ratio', `${img.naturalWidth} / ${img.naturalHeight}`);
+        slide.style.setProperty('--slide-ratio-number', img.naturalWidth / img.naturalHeight);
+        slide.classList.add('slide--loaded');
+      });
+      frame.append(img);
       inner.append(frame, el('div', { class: 'caption' }, photo.caption || ''));
       slide.append(inner);
       track.append(slide);
@@ -304,8 +352,8 @@ function renderTournaments(data) {
 
     const prev = el('button', { type: 'button', ariaLabel: 'Previous slide' }, '‹');
     const next = el('button', { type: 'button', ariaLabel: 'Next slide' }, '›');
-    prev.addEventListener('click', () => track.scrollBy({ left: -track.clientWidth * 0.92, behavior: 'smooth' }));
-    next.addEventListener('click', () => track.scrollBy({ left: track.clientWidth * 0.92, behavior: 'smooth' }));
+    prev.addEventListener('click', () => scrollCarouselToSlide(track, -1));
+    next.addEventListener('click', () => scrollCarouselToSlide(track, 1));
 
     const carousel = el('div', { class: 'carousel' }, [prev, track, next]);
     section.append(carousel);
