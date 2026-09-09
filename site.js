@@ -384,6 +384,113 @@ function renderPeople(data) {
 
   data.people.current.forEach(p => current && current.append(makeCard(p)));
   data.people.alumni.forEach(p => alumni && alumni.append(makeCard(p)));
+  setupAlumniKey(current, makeCard);
+}
+
+function setupAlumniKey(current, makeCard) {
+  const key = document.getElementById('alumniKey');
+  if (!key || !current) return;
+
+  let letters = 'Alumni'.split('').map((letter, index) => ({ letter, id: `alumni-letter-${index}` }));
+  let selectedIndex = null;
+
+  const revealLumina = () => {
+    if (current.querySelector('[data-secret-person="lumina"]')) return;
+
+    const card = makeCard({
+      name: 'Conall McConnachie',
+      title: 'Chair for Peace in the Middle East',
+      bio: 'After narrowly coming 2nd in the 2026 presidential election, Conall decided to take it easy and achieve something much easier than running this batty club: enduring peace in the Middle East. With expeditions scheduled to Afganistan, the West Bank, and Yemen, we are confident Conall will build more bridges between our leadership and the world\'s.',
+      photo: 'https://aura.dartmouthquizbowl.org/Conall.webp'
+    });
+    card.dataset.secretPerson = 'lumina';
+    card.classList.add('person--secret');
+    current.append(card);
+  };
+
+  const updateSelectedLetter = () => {
+    key.querySelectorAll('.alumni-key-letter').forEach((button, index) => {
+      button.classList.toggle('selected', index === selectedIndex);
+    });
+  };
+
+  const renderLetters = (previousRects = null) => {
+    key.innerHTML = '';
+    letters.forEach((item, index) => {
+      const button = el('button', {
+        type: 'button',
+        class: index === selectedIndex ? 'alumni-key-letter selected' : 'alumni-key-letter',
+        ariaLabel: `Move letter ${item.letter}`,
+        draggable: false
+      }, item.letter);
+      button.dataset.letterId = item.id;
+      button.style.cursor = 'default';
+      button.addEventListener('dragstart', event => event.preventDefault());
+
+      button.addEventListener('click', () => {
+        if (selectedIndex == null) {
+          selectedIndex = index;
+          updateSelectedLetter();
+          return;
+        } else if (selectedIndex === index) {
+          selectedIndex = null;
+          updateSelectedLetter();
+          return;
+        }
+
+        const previousRects = new Map(
+          Array.from(key.querySelectorAll('.alumni-key-letter')).map(letterButton => [
+            letterButton.dataset.letterId,
+            letterButton.getBoundingClientRect()
+          ])
+        );
+
+        const moving = letters.splice(selectedIndex, 1)[0];
+        letters.splice(index, 0, moving);
+        selectedIndex = null;
+
+        const isSolved = letters.map(item => item.letter).join('').toLowerCase() === 'lumina';
+        if (isSolved) {
+          letters.forEach(item => item.letter = item.letter.toLowerCase());
+        } else {
+          key.classList.remove('alumni-key--shuffling');
+          key.offsetWidth;
+          key.classList.add('alumni-key--shuffling');
+        }
+
+        renderLetters(previousRects);
+        if (isSolved) revealLumina();
+      });
+
+      key.append(button);
+    });
+
+    if (!previousRects) return;
+
+    requestAnimationFrame(() => {
+      key.querySelectorAll('.alumni-key-letter').forEach(button => {
+        const previousRect = previousRects.get(button.dataset.letterId);
+        if (!previousRect) return;
+
+        const nextRect = button.getBoundingClientRect();
+        const dx = previousRect.left - nextRect.left;
+        const dy = previousRect.top - nextRect.top;
+        if (!dx && !dy) return;
+        if (!button.animate) return;
+
+        button.animate(
+          [
+            { transform: `translate(${dx}px, ${dy}px)` },
+            { transform: 'translate(0, 0)' }
+          ],
+          { duration: 260, easing: 'cubic-bezier(.2,.8,.2,1)' }
+        );
+      });
+    });
+  };
+
+  key.classList.add('alumni-key');
+  renderLetters();
 }
 
 // ── CONTACTS ──────────────────────────────────────────────────────────────────

@@ -183,6 +183,52 @@ h1{font-size:clamp(2.2rem, 5vw, 4.6rem);line-height:1;letter-spacing:-.05em;marg
 .divider span{
   text-transform:uppercase;letter-spacing:.18em;font-size:12px;color:var(--accent);font-weight:700
 }
+.alumni-key{
+  display:inline-flex;
+  align-items:center;
+  gap:1px;
+  cursor:default!important;
+}
+.alumni-key-letter{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:inherit;
+  cursor:default!important;
+  font:inherit;
+  letter-spacing:inherit;
+  padding:2px 1px;
+  text-transform:inherit;
+  transition:transform .16s ease;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.alumni-key,
+.alumni-key *,
+.alumni-key-letter,
+.alumni-key-letter:hover,
+.alumni-key-letter:active,
+.alumni-key-letter:focus,
+.alumni-key-letter:focus-visible,
+.alumni-key-letter.selected{
+  cursor:default!important;
+}
+.alumni-key-letter:hover,
+.alumni-key-letter:focus-visible{
+  outline:0;
+}
+.alumni-key-letter.selected{
+  outline:0;
+  transform:translateY(-1px);
+}
+.alumni-key--shuffling .alumni-key-letter{
+  animation:alumniKeyShuffle .26s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes alumniKeyShuffle{
+  0%{transform:translateY(0)}
+  45%{transform:translateY(-3px)}
+  100%{transform:translateY(0)}
+}
 .people-grid{
   display:grid;
   grid-template-columns:repeat(4, minmax(0, 1fr));
@@ -207,6 +253,15 @@ h1{font-size:clamp(2.2rem, 5vw, 4.6rem);line-height:1;letter-spacing:-.05em;marg
 .person .name{font-size:1.15rem;font-weight:800}
 .person .title{margin-top:4px;color:var(--accent);text-transform:uppercase;font-size:.78rem;letter-spacing:.14em}
 .person .bio{margin-top:10px;color:var(--muted);line-height:1.65;font-size:.95rem}
+.person--secret{
+  transform-origin:center top;
+  animation:secretPersonIn .62s cubic-bezier(.18,.9,.22,1) both;
+}
+@keyframes secretPersonIn{
+  0%{opacity:0;transform:translateY(18px) scale(.96)}
+  60%{opacity:1;transform:translateY(-3px) scale(1.015)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
 
 .contact-layout{display:grid;grid-template-columns:1fr .9fr;gap:16px}
 .form{padding:18px}
