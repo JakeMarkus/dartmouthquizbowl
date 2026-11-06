@@ -128,6 +128,51 @@
     }
   ],
   "tournaments": [
+
+    {
+      "name": "Monster @ Tufts, 2026",
+      "description": "",
+      "photos": [
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_4952.webp", "caption": "The elephant outside the rooms: \"Jumbo!\"" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_4938.webp", "caption": "Dartmouth A and B play off against each other; Halloween candy flies." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_0675.webp", "caption": "Rajiv, Jake, and Will win book prizes." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_4957.webp", "caption": "Team A: Will P. '27, Rajiv P. '29, Micah L. '29, & Jackson P. '28." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_4964.webp", "caption": "Team B: Tanush T'30, Jake M. '26, Beatrice W. '30, & Ian T. '30." }
+      ]
+    }, 
+
+
+
+    {
+      "name": "ACF Fall @ MIT, 2026",
+      "description": "",
+      "photos": [
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_4039.webp", "caption": "DARTMOUTH A: YOUR ACF FALL CHAMPS!!! #1 'Bowlers" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_4057.webp", "caption": "GIVE A ROUSE!" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_4052.webp", "caption": "rRaaaaaaaaaaaaa......AAAAAHHHHH" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3966.webp", "caption": "The whole gang assembles in front of the great dome on lunch break." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3949mk2.webp", "caption": "Dartmouth A: Ayaan J. '29, Jackson P. '28, Micah L. '29, Kaushik R. '29, & Tanush T. '30" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3943.webp", "caption": "Dartmouth B: Kartik G. '30, Ian T. '30, Ethan T. '30, ᵏᵉᵍᵍʸ, Daniel C. '30, Beatrice W. '30." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3952.webp", "caption": "Staff: Will P. '27, Rajiv P. '29, Audrey E. '28, Jake M. '26" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3931.webp", "caption": "Will Parocai reads to Dartmouth B during a prelim match." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_4029.webp", "caption": "Rajiv Pujara accepts an \"award.\" Don't ask!" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3909.webp", "caption": "Friday night practice fun! Worth it." }
+      ]
+    }, 
+
+
+    {
+      "name": "Terrapin Open @ Boston U., 2026",
+      "description": "",
+      "photos": [
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3086.webp", "caption": "Dartmouth A puts their noses to the grindstone." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3128.webp", "caption": "Dartmouth A squares off against Dartmouth B!" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3101.webp", "caption": "Team picture at lunch." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3125.webp", "caption": "There are no stupid answers in quizbowl, just funny ones!" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3113.webp", "caption": "A dialectic duo on the buzzers" }
+      ]
+    }, 
+
     {
       "name": "MRNA @ Columbia, 2026",
       "description": "",
@@ -164,17 +209,57 @@
     }, 
 
     {
+      "name": "Scarlet Houseknight @ Brown, 2025",
+      "description": "",
+      "photos": [
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3744.webp", "caption": "Dartmouth assembles beneath the memorial gate" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3769.webp", "caption": "The A & B teams square off against each other." },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_1134.webp", "caption": "Jasper X. '29 and Rajiv P. '29 receive book prizes" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_1133.webp", "caption": "Dartmouth B: Rajiv P. '29, Kaushik R. '29, William K. '29, and Jackson P. '28" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_3767.webp", "caption": "An inter-Dartmouth brawl breaks out, quizbowl is high stakes" },
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_0029.webp", "caption": "Trivia and Triviality" }
+
+      ]
+    }, 
+
+    {
+      "name": "HISTONE @ Yale, 2025",
+      "description": "",
+      "photos": [
+        { "src": "https://aura.dartmouthquizbowl.org/histone.webp", "caption": "YOUR #1 HISTONE CHAMPIONS!!" },
+        { "src": "https://aura.dartmouthquizbowl.org/image2.webp", "caption": "The team listening to a question...mostly" },
+        { "src": "https://aura.dartmouthquizbowl.org/image.webp", "caption": "Arm in arm in quizbowl." }
+
+
+      ]
+    }, 
+
+
+    {
       "name": "ACF Fall @ MIT, 2025",
       "description": "",
       "photos": [
         { "src": "https://aura.dartmouthquizbowl.org/IMG_3140.webp", "caption": "The whole gang in front of the great dome." },
         { "src": "https://aura.dartmouthquizbowl.org/IMG_3146.webp", "caption": "Team A: Elliott G. '28, Alice Z. '29, & William K. '29" },
-        { "src": "https://aura.dartmouthquizbowl.org/IMG_3149.webp", "caption": "Team B: Jackson P '28, Ayaan J '29, Micah L '29, & Jake M '26" },
+        { "src": "https://res.jakemarkus.com/imgs/portfolio/dsqbtin.webp", "caption": "Team B: Jackson P '28, Ayaan J '29, Micah L '29, & Jake M '26" },
         { "src": "https://aura.dartmouthquizbowl.org/IMG_3155.webp", "caption": "Team C: William B. '29, Taiki T. '29, & Kaushik R. '29" }, 
         { "src": "https://aura.dartmouthquizbowl.org/IMG_3160.webp", "caption": "Supporting personel Rajiv P. '29, Matt F. '29, & William P. '27" },
         { "src": "https://aura.dartmouthquizbowl.org/IMG_3156.webp", "caption": "Our team augur recieves excellent premonitions." }        
       ]
     }, 
+    {
+      "name": "NAQT SCT @ Yale, 2025",
+      "description": "",
+      "photos": [
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_8968.webp", "caption": "Dartmouth gathers around the uncs in situ." },
+        { "src": "https://aura.dartmouthquizbowl.org/image8.webp", "caption": "Are you not entertained!?" },
+        { "src": "https://aura.dartmouthquizbowl.org/image9.webp", "caption": "Team A: Audrey E. '28, Lucia L. '27, Alexander C. '25, William P. '27" },
+        { "src": "https://aura.dartmouthquizbowl.org/image10.webp", "caption": "Team B: Angelyn L. '28, Jake M. '26, Elliott G. '28, Jackson P. '28" }, 
+        { "src": "https://aura.dartmouthquizbowl.org/IMG_8974.webp", "caption": "SSShhhhhhhhhhh, it's Quizbowl time" },
+        { "src": "https://aura.dartmouthquizbowl.org/image11.webp", "caption": "Our first consul secures a book prize!" }        
+      ]
+    }, 
+    
     {
       "name": "NAQT Nationals (ICT), Chicago 2025",
       "description": "",
