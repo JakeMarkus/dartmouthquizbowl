@@ -105,15 +105,15 @@ function setupStageBackground(data) {
     fig.style.top = cy + 'px';
     root.append(fig);
     img.onload = () => {
-      if (reduce) { fig.style.opacity = '1'; fig.style.transform = 'translate(-50%,-50%)'; setTimeout(() => fig.remove(), DUR); return; }
+      if (reduce) { fig.style.opacity = '.86'; fig.style.transform = 'translate(-50%,-50%)'; setTimeout(() => fig.remove(), DUR); return; }
       const startY = sh.height - cy + 80;                           // from below the bottom edge
       const T = (x, y, s, r) => `translate(-50%,-50%) translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${s}) rotate(${r.toFixed(2)}deg)`;
       const kf = [{ transform: T(0, startY, .1, -3), opacity: 0, offset: 0, easing: 'cubic-bezier(.2,.7,.2,1)' },
-                  { transform: T(0, 0, 1, 0), opacity: 1, offset: .2 }];
+                  { transform: T(0, 0, 1, 0), opacity: .86, offset: .2 }];
       const n = 9, ph = Math.random() * 6.28;
       for (let k = 1; k <= n; k++) {                                // the hover: a teeny bit of wobble
         const t = k / n;
-        kf.push({ transform: T(Math.sin(ph + t * 5) * 5, Math.cos(ph + t * 4) * 5, 1, Math.sin(ph + t * 3) * 1.1), opacity: 1, offset: .2 + t * .58 });
+        kf.push({ transform: T(Math.sin(ph + t * 5) * 5, Math.cos(ph + t * 4) * 5, 1, Math.sin(ph + t * 3) * 1.1), opacity: .86, offset: .2 + t * .58 });
       }
       kf.push({ transform: T(Math.sin(ph) * 14, -150, 1.12, 2), opacity: 0, offset: 1, easing: 'ease-in' });
       const anim = fig.animate(kf, { duration: DUR, easing: 'linear', fill: 'forwards' });
@@ -123,7 +123,8 @@ function setupStageBackground(data) {
     img.src = src;
   };
   let timer = 0;
-  const loop = () => { spawn(); timer = setTimeout(loop, DUR - 1900); };
+  const gap = () => window.matchMedia('(max-width: 980px)').matches ? DUR + 3500 : DUR - 1900;   // vertical mode: leave the fire visible between photos
+  const loop = () => { spawn(); timer = setTimeout(loop, gap()); };
   loop();
 
   // when the bonfire sits in the photo spot (narrow screens), an answer sends the photo away
@@ -544,7 +545,19 @@ function sizeQuizCard(container) {
 function positionBonfire() {
   const fire = document.getElementById('bonfire'), col = document.querySelector('.stage-left');
   if (!fire || !col) return;
-  if (!window.matchMedia('(min-width: 981px)').matches) { fire.style.left = ''; return; }
+  if (!window.matchMedia('(min-width: 981px)').matches) {
+    // vertical mode: the bottom log rests on the green top of the card; plaque near the top of the stage
+    fire.style.left = '';
+    const stage = document.getElementById('stage'), card = document.getElementById('quizContainer');
+    if (stage && card) {
+      const sr = stage.getBoundingClientRect(), cardTop = card.getBoundingClientRect().top - sr.top;
+      const w = Math.max(200, Math.min(560, window.innerWidth * 0.96, (cardTop - 10) / 0.81));
+      fire.style.setProperty('--fw', Math.round(w) + 'px');
+      fire.style.setProperty('--fb', Math.round(sr.height - cardTop - w * 0.03) + 'px');
+    }
+    return;
+  }
+  fire.style.removeProperty('--fw'); fire.style.removeProperty('--fb');
   fire.style.left = Math.round(col.getBoundingClientRect().width / 2 - fire.offsetWidth / 2) + 'px';
 }
 
@@ -556,6 +569,7 @@ function renderQuiz(data) {
   setupFireflies();
   positionBonfire();
   window.addEventListener('resize', positionBonfire);
+  if (window.ResizeObserver) new ResizeObserver(positionBonfire).observe(document.getElementById('stage'));
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(positionBonfire);
   quizQuestions = data.quiz || [];
   if (!quizQuestions.length) {
