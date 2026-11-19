@@ -413,3 +413,13 @@ body[data-page="home"] .banner-sub{display:block}
   body[data-page="home"] .brand-logo{height:calc(32px + (1 - var(--p,0)) * 6px)}
   body[data-page="home"] .brand-text{white-space:normal;line-height:1.08;max-width:calc(100vw - 2 * var(--wp) - 64px - 54px);font-size:calc(.74rem + (1 - var(--p,0)) * (clamp(1.2rem,6.4vw,1.7rem) - .74rem))}
 }
+
+/* ── PHOTO REEL: whole photos, never cropped ── */
+.reel{padding:64px 0 56px;background:var(--white)}
+.reel-frame{position:relative;margin-top:22px;aspect-ratio:16/9;max-height:78vh;width:100%;background:#0b1d15;outline:none}
+.reel-frame img{display:block;width:100%;height:100%;object-fit:contain}
+.reel-btn{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border:1px solid rgba(255,255,255,.45);background:rgba(0,0,0,.35);color:#fff;font-size:1.2rem;cursor:pointer;transition:background .15s}
+.reel-btn:hover{background:var(--accent)}
+.reel-prev{left:14px}.reel-next{right:14px}
+.reel-meta{display:flex;justify-content:space-between;gap:20px;margin-top:12px;font-size:.84rem;color:var(--muted)}
+.reel-meta #reelCount{font-weight:700;letter-spacing:.12em;white-space:nowrap}
