@@ -100,11 +100,9 @@ main{flex:1}
   height:max(640px, calc(100vh - var(--head-h)));height:max(640px, calc(100svh - var(--head-h)));
   display:flex;background:#0d3a25;
 }
-.stage-bg{position:absolute;inset:0;z-index:-4;overflow:hidden;background:#0d3a25}
-.stage-bg-layer{
-  position:absolute;inset:-5%;background-size:cover;background-position:center;
-  opacity:0;transition:opacity 1.4s ease;animation:bgFloat 26s ease-in-out infinite alternate;
-}
+.stage-bg{position:absolute;inset:0;z-index:-4;overflow:hidden;background:#06150e}
+.stage-bg-layer{position:absolute;inset:0 0 130px 0;opacity:0;transition:opacity 1.4s ease}
+.stage-bg-layer img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
 .stage-bg-layer.is-active{opacity:1}
 @keyframes bgFloat{0%{transform:translate3d(0,-1.6%,0) scale(1.03)}100%{transform:translate3d(0,1.6%,0) scale(1.07)}}
 .stage::before{ /* local shade behind the title only; photos stay clear everywhere else */

@@ -81,6 +81,7 @@ function setupStageBackground(data) {
   const layers = [0, 1].map(() => {
     const d = document.createElement('div');
     d.className = 'stage-bg-layer';
+    d.append(document.createElement('img'));
     root.append(d);
     return d;
   });
@@ -115,7 +116,7 @@ function setupStageBackground(data) {
     const src = await pick();
     if (!src) return;
     const next = layers[active], prev = layers[1 - active];
-    next.style.backgroundImage = `url("${src}")`;
+    next.firstChild.src = src;
     next.classList.add('is-active');
     prev.classList.remove('is-active');
     active = 1 - active;
