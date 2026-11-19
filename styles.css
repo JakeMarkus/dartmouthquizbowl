@@ -340,7 +340,7 @@ body[data-page="home"] .footer{margin-top:0}
   .stage{--zone:clamp(240px,78vw,430px)}
   .stage-grid{grid-template-columns:1fr;grid-template-rows:auto 1fr;gap:8px;padding-top:var(--zone);z-index:auto}
   .stage-left h1{max-width:none}
-  .bonfire{position:absolute;left:50%!important;transform:translateX(-50%);right:auto;top:10px;bottom:auto;width:min(520px,92vw,calc((var(--zone) - 24px) / 1.1));margin:0;z-index:0}
+  .bonfire{position:absolute;left:50%!important;transform:translateX(-50%);right:auto;--fw:min(560px,96vw,calc((var(--zone) - 16px) / .828));width:var(--fw);top:calc(8px - var(--fw) * .089);bottom:auto;margin:0;z-index:0}
   .stage-right{padding-bottom:0;position:relative;z-index:2}
   .stage-right .quiz-head,.stage-right .quiz-container{width:min(440px,100%)}
   .stage-right .quiz-head{margin:0 0 12px auto}

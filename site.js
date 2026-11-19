@@ -123,7 +123,8 @@ function setupStageBackground(data) {
     img.src = src;
   };
   let timer = 0;
-  const loop = () => { spawn(); timer = setTimeout(loop, DUR - 1900); };
+  const gap = () => window.matchMedia('(max-width: 980px)').matches ? DUR + 3500 : DUR - 1900;   // narrow: leave the fire visible between photos
+  const loop = () => { spawn(); timer = setTimeout(loop, gap()); };
   loop();
 
   // when the bonfire sits in the photo spot (narrow screens), an answer sends the photo away
