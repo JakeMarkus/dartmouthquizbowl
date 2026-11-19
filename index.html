@@ -34,6 +34,13 @@
 
     <main>
 
+      <!-- PHOTOS: their own section, nothing overlaps it -->
+      <section class="photo-band">
+        <div class="wrap">
+          <div class="photo-frame" id="photoPanel" aria-label="Photos from our tournaments"></div>
+        </div>
+      </section>
+
       <!-- STAGE: title + bonfire (left), trivia (right) -->
       <section class="stage" id="stage">
         <div class="stage-bg" id="stageBg" aria-hidden="true"></div>
@@ -43,17 +50,12 @@
             <div class="bonfire" id="bonfire" aria-hidden="true"></div>
           </div>
           <div class="stage-right">
-            <div class="sr-row">
-              <aside class="photo-panel" id="photoPanel" aria-label="Photos from our tournaments"></aside>
-              <div class="quiz-col">
-                <div class="quiz-head">
-                  <div class="kicker"></div>
-                  <h2>Big Green Trrrrivia!!!</h2>
-                  <p></p>
-                </div>
-                <div id="quizContainer" class="quiz-container"></div>
-              </div>
+            <div class="quiz-head">
+              <div class="kicker"></div>
+              <h2>Big Green Trrrrivia!!!</h2>
+              <p></p>
             </div>
+            <div id="quizContainer" class="quiz-container"></div>
           </div>
         </div>
       </section>

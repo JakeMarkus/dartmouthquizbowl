@@ -101,6 +101,7 @@ main{flex:1}
   display:flex;background:#0d3a25;
 }
 .stage-bg{position:absolute;inset:0;z-index:-4;overflow:hidden;background:linear-gradient(180deg,#041009 0%,#07201a 60%,#0a2a1c 100%)}
+.stage::before{display:none}
 .stage-bg-layer{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
 .stage-bg-layer img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
 .stage-bg-layer.is-active{opacity:1}
@@ -131,7 +132,7 @@ main{flex:1}
 
 .stage-grid{
   position:relative;z-index:2;width:100%;
-  display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1.38fr);gap:56px;align-items:stretch;
+  display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:stretch;
   padding-top:52px;padding-bottom:0;
 }
 .stage-left{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
@@ -142,12 +143,8 @@ main{flex:1}
 }
 .stage-left p{margin-top:16px;max-width:38ch;line-height:1.7;font-size:.96rem;color:rgba(255,255,255,.92);text-shadow:0 1px 12px rgba(0,0,0,.5)}
 .stage-right{position:relative;min-width:0;display:flex;flex-direction:column;justify-content:flex-end}
-.stage-right{z-index:3}
-.sr-row{display:flex;align-items:stretch;justify-content:flex-end;gap:16px}
-.quiz-col{flex:none;width:min(500px,100%)}
-.quiz-col .quiz-head{position:relative;width:100%;margin:0 0 12px}
-.quiz-col .quiz-container{position:relative;width:100%}
-.photo-panel{position:relative;flex:1 1 0;min-width:230px;max-width:460px;min-height:300px;background:#0a1b13;border-top:4px solid var(--accent);box-shadow:var(--shadow-lg);overflow:hidden}
+.stage-right .quiz-head{position:relative;width:min(580px,100%);margin:0 0 12px auto}
+.stage-right .quiz-container{position:relative;width:min(580px,100%);margin-left:auto}
 .quiz-head{margin-bottom:16px;text-shadow:0 1px 14px rgba(0,0,0,.5)}
 .quiz-head .kicker{color:#cfe6d9;margin-bottom:8px}
 .quiz-head h2{font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800;letter-spacing:-.025em}
@@ -155,7 +152,7 @@ main{flex:1}
 .quiz-head p:empty,.quiz-head .kicker:empty{display:none}
 
 /* ── BONFIRE (the Homecoming tower) ─────────────────────────────────────── */
-.bonfire{position:absolute;left:40px;bottom:-2px;width:min(800px, calc((max(640px, 100svh - var(--head-h)) - 255px) / 1.1));z-index:0;pointer-events:none;container-type:inline-size}
+.bonfire{position:absolute;left:40px;bottom:-2px;width:min(500px, calc((max(640px, 100svh - var(--head-h)) - 255px) / 1.1));z-index:0;pointer-events:none;container-type:inline-size}
 .bonfire svg{display:block;width:100%;height:auto;overflow:visible}
 .flame{transform-box:fill-box;transform-origin:50% 100%;transform:scale(.15);opacity:0;transition:transform .5s ease-out,opacity .3s ease}
 .flame.lit{transform:scale(1);opacity:1}
@@ -344,9 +341,8 @@ body[data-page="home"] .footer{margin-top:0}
   .stage-left h1{max-width:none}
   .bonfire{position:absolute;left:calc(min(520px,92vw) * -.16)!important;right:auto;bottom:-2px;width:min(520px,92vw);margin:0;z-index:0}
   .stage-right{padding-bottom:0;position:relative;z-index:1}
-  .sr-row{flex-direction:column;align-items:flex-end;gap:14px}
-  .quiz-col{width:min(440px,100%)}
-  .photo-panel{flex:none;width:min(440px,100%);max-width:none;height:190px;min-height:0}
+  .stage-right .quiz-head,.stage-right .quiz-container{width:min(440px,100%)}
+  .stage-right .quiz-head{margin:0 0 12px auto}
   .about-grid{grid-template-columns:1fr;gap:44px}
   .about-photo::before{left:-8px;top:-8px;right:8px;bottom:8px}
   .carousel{grid-template-columns:1fr}
@@ -416,3 +412,8 @@ body[data-page="home"] .banner-sub{display:block}
   body[data-page="home"] .brand-logo{height:calc(32px + (1 - var(--p,0)) * 6px)}
   body[data-page="home"] .brand-text{white-space:normal;line-height:1.08;max-width:calc(100vw - 2 * var(--wp) - 64px - 54px);font-size:calc(.74rem + (1 - var(--p,0)) * (clamp(1.2rem,6.4vw,1.7rem) - .74rem))}
 }
+
+/* ── PHOTO BAND: its own section above the trivia stage ── */
+.photo-band{background:#04100a;padding:24px 0}
+.photo-frame{position:relative;margin:0 auto;width:min(100%,1040px);aspect-ratio:16/9;max-height:60vh;background:#0a1b13;overflow:hidden}
+@media (orientation:portrait){.photo-frame{aspect-ratio:3/4;max-height:68vh;width:min(100%,560px)}}
