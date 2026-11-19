@@ -417,3 +417,7 @@ body[data-page="home"] .banner-sub{display:block}
 .photo-band{background:#04100a;padding:24px 0}
 .photo-frame{position:relative;margin:0 auto;width:min(100%,1040px);aspect-ratio:16/9;max-height:60vh;background:#0a1b13;overflow:hidden}
 @media (orientation:portrait){.photo-frame{aspect-ratio:3/4;max-height:68vh;width:min(100%,560px)}}
+
+/* home: the game sits at the very bottom, its own pines run straight into the footer */
+body[data-page="home"] .footer::before{display:none}
+body[data-page="home"] .stage-bg{background:linear-gradient(180deg,#041009 0%,#07201a 55%,#061a10 100%)}
