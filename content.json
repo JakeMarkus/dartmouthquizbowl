@@ -1,12 +1,12 @@
 {
   "site": {
     "name": "Dartmouth Quizbowl",
-    "tagline": "Fast buzzes, deep cuts, and a suspiciously large stack of packets.",
+    "tagline": "",
     "logoText": "DQB"
   },
   "home": {
     "heroTitle": "Dartmouth Quizbowl",
-    "heroBlurb": "Your Big Green trivia team. Find us playing universities nationwide, diving down a wiki rabbit hole, or in Collis for Sunday practice.",
+    "heroBlurb": "",
     "introTitle": "What do we do?",
     "introText": "Imagine Jeopardy, but with two teams of four. Anything and everything comes up! Come by practice and get a taste of the trivia thrill. Our club is open to all Dartmouth Students.",
     "collage": [

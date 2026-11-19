@@ -26,6 +26,62 @@ function el(tag, attrs = {}, children = []) {
   return node;
 }
 
+function setupHeader() {
+  const bar = document.getElementById('topbar');
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('siteNav');
+  const onScroll = () => bar && bar.classList.toggle('is-scrolled', window.scrollY > 12);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  if (!toggle || !nav) return;
+  const setOpen = open => {
+    nav.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle.addEventListener('click', () => setOpen(!nav.classList.contains('is-open')));
+  nav.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', e => { if (!bar.contains(e.target)) setOpen(false); });
+}
+
+function setupStageBackground(data) {
+  const root = document.getElementById('stageBg');
+  const photos = ((data.home && data.home.collage) || []).map(c => c && c.src).filter(Boolean);
+  if (!root || !photos.length) return;
+  for (let i = photos.length - 1; i > 0; i--) {
+    const k = Math.floor(Math.random() * (i + 1));
+    [photos[i], photos[k]] = [photos[k], photos[i]];
+  }
+  const layers = [0, 1].map(() => {
+    const d = document.createElement('div');
+    d.className = 'stage-bg-layer';
+    root.append(d);
+    return d;
+  });
+  const preload = src => new Promise(res => {
+    const im = new Image();
+    im.onload = () => res(true);
+    im.onerror = () => res(false);
+    im.src = src;
+  });
+  let idx = 0, active = 0;
+  const show = async () => {
+    for (let t = 0; t < photos.length; t++) {
+      const src = photos[idx++ % photos.length];
+      if (await preload(src)) {
+        const next = layers[active], prev = layers[1 - active];
+        next.style.backgroundImage = `url("${src}")`;
+        next.classList.add('is-active');
+        prev.classList.remove('is-active');
+        active = 1 - active;
+        return;
+      }
+    }
+  };
+  show();
+  setInterval(show, 6000);
+}
+
 // ── HOME ──────────────────────────────────────────────────────────────────────
 
 // Add these helpers somewhere above renderHome()
@@ -138,146 +194,372 @@ function renderHome(data) {
   }
 }
 
+// ── BONFIRE SCENE ─────────────────────────────────────────────────────────────
+
+const SVGNS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs = {}, kids = []) {
+  const n = document.createElementNS(SVGNS, tag);
+  for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+  kids.forEach(c => n.append(c));
+  return n;
+}
+
+const CYCLE = 5; // every 5 in a row the bonfire goes up in a blaze and comes down
+
+// The Homecoming bonfire: a tall, slightly tapering tower of stacked timbers (no nails),
+// filled with pallets, topped with the first-year class numeral.
+const Bonfire = {
+  root: null, flames: [], embers: [], glow: null,
+  build(root) {
+    this.root = root;
+
+
+    const flamePath = () => {
+      const h = 130, w = 22 + Math.random() * 16, lean = (Math.random() - .5) * 30, k = Math.random();
+      const f = n => n.toFixed(1);
+      return `M0,0 C${f(-w * 1.35)},-6 ${f(-w * 1.45)},${f(-h * .35)} ${f(-w * .75)},${f(-h * .56)} ` +
+        `C${f(-w * .5)},${f(-h * (.68 + k * .08))} ${f(lean - w * .2)},${f(-h * .86)} ${f(lean)},${-h} ` +
+        `C${f(lean + w * .25)},${f(-h * .8)} ${f(w * .6)},${f(-h * (.66 + k * .06))} ${f(w * .8)},${f(-h * .5)} ` +
+        `C${f(w * 1.5)},${f(-h * .3)} ${f(w * 1.35)},-6 0,0 Z`;
+    };
+    const stop = (o, c) => svgEl('stop', { offset: o, 'stop-color': c });
+    const vgrad = (id, a, b2) => svgEl('linearGradient', { id, x1: 0, y1: 1, x2: 0, y2: 0 }, [stop('0', a), stop('1', b2)]);
+    const defs = svgEl('defs', {}, [svgEl('filter', { id: 'hb', x: '-50%', y: '-50%', width: '200%', height: '200%' }, [svgEl('feGaussianBlur', { stdDeviation: 42 })]), vgrad('fo', '#b81d0a', '#ff6a17'), vgrad('fm', '#ff7a16', '#ffc02e'), vgrad('fc', '#ffcf3a', '#fff3b0')]);
+    const svg = svgEl('svg', { viewBox: '0 0 360 330', role: 'img', 'aria-label': 'Homecoming bonfire' }, [defs]);
+
+    const CX = 180, GY = 322, H = 13, P = 15, N = 16;
+    const wAt = i => 92 - i * (30 / 15);
+    const topY = GY - H - (N - 1) * P;
+
+    svg.append(svgEl('ellipse', { cx: CX, cy: 326, rx: 150, ry: 6, fill: '#03120c' }));
+
+    // flames burst out from behind and around the tower
+    const flames = svgEl('g');
+    // a living mass of flames across the logs: dense, overlapping, many sizes, random ignition order
+    const pts = [];
+    for (let y = topY + 40; y <= GY - 2; y += 17) {
+      const half = 86 - ((GY - y) / (GY - topY)) * 22;
+      for (let x = CX - half + 4; x <= CX + half - 4; x += 21) {
+        const px = x + (Math.random() - .5) * 20, py = y + (Math.random() - .5) * 14;
+        const s = Math.max(.28, Math.min(.5 + Math.random() * .42, (py - 70) / 130));
+        pts.push([px, py, s, 0]);
+      }
+    }
+    const key = pts.map(p => (GY - p[1]) + Math.random() * 45);
+    const rankOf = [];
+    pts.map((_, i) => i).sort((a, b) => key[a] - key[b]).forEach((idx, r) => { rankOf[idx] = r; });
+    const per = [6, 12, 24, 40, 60, 1e9];
+    const tongues = pts.map((p, i) => {
+      const rank = rankOf[i];
+      return [...p, per.findIndex(c => rank < c)];
+    }).sort((p, q) => p[1] - q[1]);
+    this.flames = tongues.map(([x, y, s, v, step], i) => {
+      const d = flamePath();
+      const mk = (sc, fill) => svgEl('path', { d, fill, transform: `scale(${sc})` });
+      const t = svgEl('g', { class: 'tongue' }, [mk(1, 'url(#fo)'), mk(.72, 'url(#fm)'), mk(.44, 'url(#fc)')]);
+      t.style.setProperty('--d', (1.5 + Math.random() * 1.3).toFixed(2) + 's');
+      t.style.setProperty('--dl', (-Math.random() * 3).toFixed(2) + 's');
+      const f = svgEl('g', { class: 'flame' }, [t]);
+      flames.append(svgEl('g', { transform: `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${((Math.random() - .5) * 6).toFixed(1)}) scale(${(s * (.75 + Math.random() * .3)).toFixed(2)} ${s.toFixed(2)})` }, [f]));
+      return { el: f, step };
+    });
+
+
+    this.halo = svgEl('ellipse', { cx: CX, cy: 215, rx: 200, ry: 175, fill: '#ff6a17', filter: 'url(#hb)', opacity: 0, class: 'halo' });
+    svg.append(this.halo);
+    const tower = svgEl('g', { class: 'tower' });
+
+    // dark pallet-filled interior, glowing through the gaps once lit
+    const poly = `${CX - 88},${GY} ${CX + 88},${GY} ${CX + 58},${topY} ${CX - 58},${topY}`;
+    tower.append(svgEl('polygon', { points: poly, fill: '#130a04', class: 'interior' }));
+    this.glow = svgEl('polygon', { points: poly, fill: '#ff7a1a', class: 'glow', opacity: 0 });
+    tower.append(this.glow);
+
+    // stacked timbers: every other tier turns 90 degrees, so its ends poke out the sides
+    const shades = ['#6d4527', '#58381f'];
+    const addTier = (y, w, odd, shade, i, extraH) => {
+      const parts = [svgEl('rect', { x: CX - w, y, width: 2 * w, height: H, fill: shade, stroke: '#26140a', 'stroke-width': .8 })];
+      if (odd) {
+        parts.push(svgEl('rect', { x: CX - w - 9, y, width: 9, height: H, fill: '#3f2616', stroke: '#26140a', 'stroke-width': .8 }));
+        parts.push(svgEl('rect', { x: CX + w, y, width: 9, height: H, fill: '#3f2616', stroke: '#26140a', 'stroke-width': .8 }));
+      }
+      const g = svgEl('g', { class: 'tier' }, parts);
+      const low = i < 4;
+      const dy = low ? (i % 2) * 2 : (GY - H - y) - Math.random() * 26 - (N - Math.min(i, N)) * 0.4;
+      g.style.setProperty('--dx', ((Math.random() - .5) * (low ? 24 : 170)).toFixed(0) + 'px');
+      g.style.setProperty('--dy', dy.toFixed(0) + 'px');
+      g.style.setProperty('--rot', ((Math.random() - .5) * (low ? 6 : 70)).toFixed(0) + 'deg');
+      g.style.setProperty('--dl', (Math.max(0, (N - i)) * 0.035).toFixed(2) + 's');
+      return g;
+    };
+    for (let i = 0; i < N; i++) tower.append(addTier(GY - H - i * P, wAt(i), i % 2 === 1, shades[i % 2], i));
+    
+    // class-year sign on top
+    const sign = svgEl('g', { class: 'tier' }, [
+      svgEl('rect', { x: 112, y: 32, width: 136, height: 36, fill: '#2a170c', stroke: '#150b05', 'stroke-width': 1 }),
+      svgEl('rect', { x: 124, y: 68, width: 8, height: 16, fill: '#3f2616' }),
+      svgEl('rect', { x: 228, y: 68, width: 8, height: 16, fill: '#3f2616' })
+    ]);
+    const txt = svgEl('text', { x: 180, y: 59, 'text-anchor': 'middle', 'font-size': 27, 'font-weight': 600, 'font-style': 'italic', 'letter-spacing': 1, fill: '#ecd5ae', 'font-family': 'Fraunces, Georgia, serif' });
+    txt.textContent = 'DSQBT';
+    sign.append(txt);
+    sign.style.setProperty('--dx', '30px'); sign.style.setProperty('--dy', '236px'); sign.style.setProperty('--rot', '24deg'); sign.style.setProperty('--dl', '0s');
+    tower.append(sign);
+    svg.append(tower);
+    flames.setAttribute('class', 'flames');
+    svg.append(flames); // in front of the logs
+
+    this.buildEmbers(root);
+
+    root.innerHTML = '';
+    root.append(svg);
+    this.buildSparks(root);
+
+
+    this.setStep(0);
+  },
+  buildSparks(root) {
+    const layer = el('div', { class: 'sparks', 'aria-hidden': 'true' });
+    root.append(layer);
+    this.sparks = [];
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const R = Math.random, TAU = Math.PI * 2, W = root.offsetWidth || 400;
+    const cols = ['#ffe08a', '#ffc04a', '#ff9a2e', '#ff7a1a', '#fff1b8'];
+    const NS = 210;
+    for (let i = 0; i < NS; i++) {
+      const size = 1.5 + R() * 2.6, c = cols[Math.floor(R() * cols.length)];
+      const e = el('span', { class: 'spark' });
+      e.style.left = (22 + R() * 56).toFixed(1) + '%';
+      e.style.bottom = (22 + R() * 45).toFixed(1) + '%';
+      e.style.width = e.style.height = size.toFixed(1) + 'px';
+      e.style.background = c; e.style.color = c;
+      layer.append(e);
+      this.sparks.push({ el: e, step: i < 42 ? 0 : 1 + Math.floor(((i - 42) / (NS - 42)) * 5) });
+      const rise = (0.55 + R() * 0.5) * ((root.closest('.stage') || document.body).clientHeight || 800), a1 = 18 + R() * 34, f1 = .8 + R() * 1.1, p1 = R() * TAU, drift = (R() - .5) * 90, fl = 4 + R() * 5, flp = R() * TAU;
+      const n = 30, pts = [];
+      for (let k = 0; k <= n; k++) {
+        const t = k / n, y = rise * Math.pow(t, .8);
+        const x = drift * t + a1 * Math.sin(t * TAU * f1 + p1) * (0.3 + t);
+        const op = Math.pow(1 - t, .9) * Math.min(1, t * 12) * (0.65 + 0.35 * Math.sin(t * TAU * fl + flp));
+        pts.push({ transform: `translate(${x.toFixed(1)}px, ${(-y).toFixed(1)}px) scale(${(1 - .6 * t).toFixed(2)})`, opacity: +op.toFixed(3), offset: t });
+      }
+      e.animate(pts, { duration: 7500 + R() * 8500, iterations: Infinity, delay: -R() * 16000, easing: 'linear' });
+    }
+  },
+  buildEmbers(root) {
+    const stage = root.closest('.stage') || document.body;
+    stage.querySelectorAll('.embers').forEach(n => n.remove());
+    const layer = el('div', { class: 'embers', 'aria-hidden': 'true' });
+    stage.append(layer);
+    this.embers = [];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const colors = ['#ff9a2e', '#ffb347', '#ff7a1a', '#ffd36a', '#ff5a1f', '#ff8a3d', '#ffc15e'];
+    const NE = 390, R = Math.random, TAU = Math.PI * 2;
+    for (let i = 0; i < NE; i++) {
+      const size = 1.8 + R() * 3.2;
+      const c = colors[Math.floor(R() * colors.length)];
+      const e = el('span', { class: 'ember2' });
+      e.style.left = (R() * 100).toFixed(2) + '%';
+      e.style.width = e.style.height = size.toFixed(1) + 'px';
+      e.style.background = c; e.style.color = c;
+      layer.append(e);
+      const step = i < 114 ? 0 : 1 + Math.floor(((i - 114) / (NE - 114)) * 5);
+      this.embers.push({ el: e, step });
+      if (reduce) { e.style.opacity = '.4'; e.style.bottom = (R() * 40) + '%'; continue; }
+      // one smooth path: gentle sway on two slow waves, a steady drift up that eases, no stop-and-go
+      const rise = (0.45 + R() * 0.5) * (stage.clientHeight || 800);
+      const a1 = 20 + R() * 40, a2 = 8 + R() * 18, f1 = 0.6 + R() * 0.9, f2 = 1.6 + R() * 1.6;
+      const p1 = R() * TAU, p2 = R() * TAU, drift = (R() - .5) * 140;
+      const sp = R() * 0.25, sph = R() * TAU, fl = 3 + R() * 4, flp = R() * TAU;
+      const n = 40, pts = [];
+      for (let k = 0; k <= n; k++) {
+        const t = k / n;
+        const y = rise * (t + sp * Math.sin(t * TAU + sph) / TAU * 1.2);
+        const x = drift * t + a1 * Math.sin(t * TAU * f1 + p1) + a2 * Math.sin(t * TAU * f2 + p2);
+        const env = Math.pow(Math.sin(Math.PI * t), 0.8);
+        const op = env * (0.5 + 0.5 * (0.6 + 0.4 * Math.sin(t * TAU * fl + flp))) ;
+        pts.push({ transform: `translate(${x.toFixed(1)}px, ${(-y).toFixed(1)}px) scale(${(1 - 0.5 * t).toFixed(2)})`, opacity: +op.toFixed(3), offset: t });
+      }
+      e.animate(pts, { duration: 12000 + R() * 16000, iterations: Infinity, delay: -R() * 28000, easing: 'linear' });
+    }
+  },
+  setStep(n) {
+    if (!this.root) return;
+    this.flames.forEach(f => f.el.classList.toggle('lit', n >= f.step));
+    this.embers.forEach(e => e.el.classList.toggle('off', n < e.step));
+    if (this.halo) this.halo.setAttribute('opacity', [0.12, 0.2, 0.28, 0.36, 0.44, 0.5][Math.min(n, 5)]);
+    if (this.sparks) this.sparks.forEach(s => s.el.classList.toggle('off', n < s.step));
+    if (this.glow) this.glow.setAttribute('opacity', [0.2, 0.32, 0.45, 0.58, 0.7, 0.8][Math.min(n, 5)]);
+  },
+  collapse() { if (this.root) this.root.classList.add('collapsed'); },
+  reset() {
+    if (!this.root) return;
+    const r = this.root;
+    const wasDown = r.classList.contains('collapsed');
+    r.classList.add('no-anim');
+    r.classList.remove('collapsed');
+    this.setStep(0);
+    void r.offsetWidth;
+    r.classList.remove('no-anim');
+    if (wasDown) {
+      r.classList.remove('rebuild'); void r.offsetWidth; r.classList.add('rebuild');
+      setTimeout(() => r.classList.remove('rebuild'), 800);
+    }
+  }
+};
+
+function setupFireflies() {
+  const stage = document.getElementById('stage');
+  if (!stage || stage.querySelector('.fireflies')) return;
+  const box = document.createElement('div');
+  box.className = 'fireflies';
+  box.setAttribute('aria-hidden', 'true');
+  for (let i = 0; i < 16; i++) {
+    const f = document.createElement('span');
+    f.className = 'fly';
+    f.style.left = (4 + Math.random() * 92) + '%';
+    f.style.top = (12 + Math.random() * 62) + '%';
+    f.style.setProperty('--d', (11 + Math.random() * 12).toFixed(1) + 's');
+    f.style.setProperty('--b', (3 + Math.random() * 4).toFixed(1) + 's');
+    f.style.setProperty('--dl', (-Math.random() * 10).toFixed(1) + 's');
+    f.style.setProperty('--dx', (-60 + Math.random() * 120).toFixed(0) + 'px');
+    f.style.setProperty('--dy', (-70 + Math.random() * 90).toFixed(0) + 'px');
+    box.append(f);
+  }
+  stage.append(box);
+}
+
 // ── QUIZ ──────────────────────────────────────────────────────────────────────
 
 let quizQuestions = [];
-let usedIndices   = [];
+let pool          = [];
 let currentIdx    = -1;
+let streak        = 0;
 
-function pickQuestion() {
-  if (!quizQuestions.length) return -1;
-  // Reset when all used
-  if (usedIndices.length >= quizQuestions.length) usedIndices = [];
-  const available = quizQuestions.map((_, i) => i).filter(i => i !== currentIdx && !usedIndices.includes(i));
-  if (!available.length) return -1;
-  return available[Math.floor(Math.random() * available.length)];
+function nextQuestionIndex() {
+  if (!pool.length) {
+    pool = quizQuestions.map((_, i) => i).filter(i => i !== currentIdx || quizQuestions.length === 1);
+    for (let i = pool.length - 1; i > 0; i--) {
+      const k = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[k]] = [pool[k], pool[i]];
+    }
+  }
+  return pool.pop();
+}
+
+function streakEl(n) {
+  const s = el('span', { class: 'streak' + (n === 0 ? ' cold' : '') });
+  s.innerHTML = `<span class="fl">🔥</span><span>Streak</span><b>${n}</b>`;
+  return s;
+}
+
+function setStreakEl(card, n, prev) {
+  const s = card.querySelector('.streak');
+  if (!s) return;
+  s.classList.toggle('cold', n === 0);
+  s.querySelector('b').textContent = n;
+  const fl = s.querySelector('.fl');
+  if (fl) {
+    fl.classList.remove('pop');
+    if (n > prev) { void fl.offsetWidth; fl.classList.add('pop'); } // the flame pops on every right answer
+  }
+}
+
+function buildCard(q, onPick) {
+  const card = el('div', { class: 'quiz-card' });
+  card.append(el('div', { class: 'quiz-meta' }, [streakEl(streak)]));
+  card.append(el('p', { class: 'quiz-question' }, q.question));
+  const grid = el('div', { class: 'quiz-choices' });
+  q.choices.forEach((choice, i) => {
+    const btn = el('button', { class: 'quiz-choice', type: 'button' }, choice);
+    if (onPick) btn.addEventListener('click', () => onPick(btn, i));
+    grid.append(btn);
+  });
+  card.append(grid);
+  return card;
+}
+
+function sizeQuizCard(container) {
+  // the card just takes the height its question needs; the stage keeps at least a screen's height
+  container.style.setProperty('--card-h', '0px');
+}
+
+function positionBonfire() {
+  const fire = document.getElementById('bonfire'), h1 = document.getElementById('heroTitle');
+  if (!fire || !h1) return;
+  if (!window.matchMedia('(min-width: 981px)').matches) { fire.style.left = ''; return; }
+  const host = fire.offsetParent.getBoundingClientRect(), r = h1.getBoundingClientRect();
+  const w = Array.from(h1.childNodes).length ? h1.scrollWidth : r.width;
+  const range = document.createRange(); range.selectNodeContents(h1);
+  const tr = range.getBoundingClientRect();
+  fire.style.left = Math.round(tr.left + tr.width / 2 - host.left - fire.offsetWidth / 2) + 'px';
 }
 
 function renderQuiz(data) {
   const container = document.getElementById('quizContainer');
   if (!container) return;
+  const fire = document.getElementById('bonfire');
+  if (fire) Bonfire.build(fire);
+  setupFireflies();
+  positionBonfire();
+  window.addEventListener('resize', positionBonfire);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(positionBonfire);
   quizQuestions = data.quiz || [];
   if (!quizQuestions.length) {
-    container.innerHTML = '<p style="color:var(--muted)">No quiz questions found in content.json.</p>';
+    container.innerHTML = '<p style="color:#fff">No quiz questions found in content.json.</p>';
     return;
   }
+  sizeQuizCard(container);
   showNextQuestion(container);
+  let t = null;
+  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => sizeQuizCard(container), 150); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => sizeQuizCard(container));
 }
 
 function showNextQuestion(container) {
-  currentIdx = pickQuestion();
-  if (currentIdx < 0) return;
-  usedIndices.push(currentIdx);
+  if (Bonfire.root && Bonfire.root.classList.contains('collapsed')) Bonfire.reset();
+  currentIdx = nextQuestionIndex();
   const q = quizQuestions[currentIdx];
-
   container.innerHTML = '';
-
-  const card = el('div', { class: 'quiz-card' });
-
-  const qText = el('p', { class: 'quiz-question' }, q.question);
-  card.append(qText);
-
-  const choiceGrid = el('div', { class: 'quiz-choices' });
-
-  q.choices.forEach((choice, i) => {
-    const btn = el('button', { class: 'quiz-choice', 'data-index': String(i) }, choice);
-    btn.addEventListener('click', () => handleAnswer(btn, i, q.answer, card, container));
-    choiceGrid.append(btn);
-  });
-
-  card.append(choiceGrid);
+  let card;
+  card = buildCard(q, (btn, i) => handleAnswer(btn, i, q.answer, card, container));
   container.append(card);
+}
 
-  // Animate in
-  requestAnimationFrame(() => card.classList.add('quiz-card--visible'));
+// the button pops out underneath the card; the card itself never moves
+function popButton(container, label, retry, onClick) {
+  const b = el('button', { class: 'quiz-next' + (retry ? ' quiz-next--retry' : ''), type: 'button' }, label);
+  b.addEventListener('click', onClick);
+  container.append(b);
 }
 
 function handleAnswer(btn, chosen, correct, card, container) {
-  // Disable all buttons
-  card.querySelectorAll('.quiz-choice').forEach(b => {
-    b.disabled = true;
-    b.classList.add('quiz-choice--locked');
-  });
+  card.querySelectorAll('.quiz-choice').forEach(b => { b.disabled = true; b.classList.add('quiz-choice--locked'); });
 
   if (chosen === correct) {
+    const prev = streak;
+    streak++;
     btn.classList.add('quiz-choice--correct');
-    card.classList.add('quiz-card--correct');
-    launchConfetti(card);
-
-    // Show "Next question" after a beat
-    setTimeout(() => {
-      const nextBtn = el('button', { class: 'quiz-next' }, 'Next question →');
-      nextBtn.addEventListener('click', () => {
-        card.classList.add('quiz-card--exit');
-        setTimeout(() => showNextQuestion(container), 400);
-      });
-      card.append(nextBtn);
-    }, 900);
+    setStreakEl(card, streak, prev);
+    if (streak % CYCLE === 0) {
+      // full blaze, then it comes crashing down; the quiz carries on
+      Bonfire.setStep(CYCLE - 1);
+      setTimeout(() => Bonfire.collapse(), 500);
+    } else {
+      Bonfire.setStep(streak % CYCLE);
+    }
+    popButton(container, 'Next question →', false, () => showNextQuestion(container));
   } else {
+    streak = 0;
     btn.classList.add('quiz-choice--wrong');
-    // Reveal correct answer
     const correctBtn = card.querySelectorAll('.quiz-choice')[correct];
     if (correctBtn) correctBtn.classList.add('quiz-choice--reveal');
-
-    setTimeout(() => {
-      const retryBtn = el('button', { class: 'quiz-next quiz-next--retry' }, 'Try another →');
-      retryBtn.addEventListener('click', () => {
-        card.classList.add('quiz-card--exit');
-        setTimeout(() => showNextQuestion(container), 400);
-      });
-      card.append(retryBtn);
-    }, 700);
+    setStreakEl(card, 0, streak);
+    Bonfire.reset();
+    popButton(container, 'Next Question →', true, () => showNextQuestion(container));
   }
 }
 
-function launchConfetti(card) {
-  const rect = card.getBoundingClientRect();
-  const colors = ['#00693e', '#0c4f2f', '#a8d5b5', '#ffffff', '#f4efe6'];
-  const N = 48;
-
-  for (let i = 0; i < N; i++) {
-    const p = document.createElement('div');
-    p.className = 'confetti-piece';
-    const size = 6 + Math.random() * 8;
-    const x = rect.left + rect.width * Math.random();
-    const y = rect.top + window.scrollY + rect.height * 0.3;
-    const angle = -90 + (Math.random() - 0.5) * 160;
-    const dist  = 80 + Math.random() * 200;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const spin  = (Math.random() - 0.5) * 720;
-    const isRect = Math.random() > 0.5;
-
-    Object.assign(p.style, {
-      position: 'fixed',
-      left: x + 'px',
-      top:  y + 'px',
-      width: size + 'px',
-      height: isRect ? size * 0.4 + 'px' : size + 'px',
-      borderRadius: isRect ? '1px' : '50%',
-      background: color,
-      pointerEvents: 'none',
-      zIndex: '9999',
-      opacity: '1',
-      transform: 'translate(-50%,-50%)',
-      transition: `transform 1.1s cubic-bezier(.2,.8,.3,1), opacity 1.1s ease`,
-      transitionDelay: Math.random() * 0.15 + 's'
-    });
-
-    document.body.append(p);
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const rad = angle * Math.PI / 180;
-        const tx  = Math.cos(rad) * dist;
-        const ty  = Math.sin(rad) * dist;
-        p.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) rotate(${spin}deg)`;
-        p.style.opacity = '0';
-      });
-    });
-
-    setTimeout(() => p.remove(), 1400);
-  }
-}
 
 // ── TOURNAMENTS ───────────────────────────────────────────────────────────────
 
@@ -512,6 +794,7 @@ function renderContacts(data) {
 
 async function main() {
   setActiveNav();
+  setupHeader();
   try {
     const data = await loadContent();
     renderHome(data);
@@ -519,6 +802,7 @@ async function main() {
     renderPeople(data);
     renderContacts(data);
     renderQuiz(data);
+    setupStageBackground(data);
   } catch (err) {
     console.error(err);
     document.body.insertAdjacentHTML('afterbegin', `<div style="padding:16px;border-bottom:1px solid #c00;background:#fff3f3;color:#700">

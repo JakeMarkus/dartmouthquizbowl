@@ -5,72 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dartmouth Quizbowl</title>
   <link rel="icon" href="https://aura.dartmouthquizbowl.org/logo.webp" type="image/webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,600&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script defer src="site.js"></script>
 </head>
 <body data-page="home">
   <div class="site-shell">
-    <header class="topbar">
+    <header class="topbar" id="topbar">
       <div class="wrap topbar-inner">
-        <a class="brand" href="index.html">
-          <div class="brand-mark">
-            <img src="https://aura.dartmouthquizbowl.org/logo.webp" alt="Dartmouth Quizbowl logo" />
-          </div>
-          <div>Dartmouth Quizbowl</div>
+        <a class="brand" href="index.html" aria-label="Dartmouth Quizbowl home">
+          <img class="brand-logo" src="https://aura.dartmouthquizbowl.org/logo.webp" alt="" />
+          <span class="brand-text">Dartmouth <em>Quizbowl</em></span>
         </a>
-        <nav class="nav">
+        <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
+        <nav class="nav" id="siteNav">
           <a href="index.html" data-page="home">Home</a>
           <a href="tournaments.html" data-page="tournaments">Tournaments</a>
           <a href="people.html" data-page="people">People</a>
           <a href="contact.html" data-page="contact">Get in touch!</a>
+          <a href="https://www.instagram.com/dartmouthquizbowl/" class="nav-ig" target="_blank" rel="noopener noreferrer" aria-label="Dartmouth Quizbowl on Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg></a>
         </nav>
       </div>
     </header>
 
     <main>
 
-      <section class="hero-new">
-        <div class="wrap hero-new-inner">
-          <div class="hero-text">
-            <div class="kicker"></div>
+      <!-- STAGE: title + bonfire (left), trivia (right) -->
+      <section class="stage" id="stage">
+        <div class="stage-bg" id="stageBg" aria-hidden="true"></div>
+        <div class="pines" aria-hidden="true"><div class="pines-back"></div><div class="pines-front"></div></div>
+        <div class="wrap stage-grid">
+          <div class="stage-left">
+            <div class="kicker">The Big Green trivia team</div>
             <h1 id="heroTitle"></h1>
             <p id="heroBlurb"></p>
-            <!--<a href="contact.html" class="hero-cta">Join the team &rarr;</a>-->
+            <div class="bonfire" id="bonfire" aria-hidden="true"></div>
+          </div>
+          <div class="stage-right">
+            <div class="quiz-head">
+              <div class="kicker"></div>
+              <h2>Big Green Trrrrivia!!!</h2>
+              <p></p>
             </div>
-        </div>
-      </section>
-
-      <section class="intro-strip">
-        <div class="wrap">
-          <div class="intro-text-block">
-            <h2 id="introTitle"></h2>
-            <p id="introText"></p>
+            <div id="quizContainer" class="quiz-container"></div>
           </div>
         </div>
       </section>
 
+      <!-- WHAT IS QUIZBOWL -->
+      <section class="about">
+        <div class="wrap about-grid">
+          <div class="about-text">
+            <div class="kicker">The game</div>
+            <h2>What is Quizbowl?</h2>
+            <p class="about-lead" id="introText"></p>
+            <ul class="facts">
+              <li><strong>Tossups</strong><span>Questions are read aloud and anyone can buzz in as the clues get easier. Buzz earlier, score more.</span></li>
+              <li><strong>Bonuses</strong><span>Win a tossup and your team teams up on a multi-part bonus.</span></li>
+              <li><strong>Everything</strong><span>Literature, history, science, fine arts, geography, pop culture, and the weird stuff in between.</span></li>
+            </ul>
+          </div>
+          <figure class="about-photo">
+            <img src="https://aura.dartmouthquizbowl.org/IMG_3128.webp" alt="Dartmouth A squares off against Dartmouth B at the Terrapin Open" loading="lazy" />
+            <figcaption>Dartmouth A squares off against Dartmouth B at the Terrapin Open.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- PHOTOS -->
       <section class="collage-section">
         <div class="wrap">
-          <div class="masonry-collage" id="collage"></div>
-        </div>
-      </section>
-
-      <section class="section quiz-section">
-        <div class="wrap">
-          <div class="section-head">
-            <div>
-              <h2>You got this, let's play!</h2>
-              <p>Try your hand at some trivia, flavoured with fun facts about our own college on the hill.</p>
-            </div>
+          <div class="mini-head">
+            <div class="kicker">Out on the circuit</div>
+            <h2>Photos</h2>
           </div>
-          <div id="quizContainer" class="quiz-container"></div>
+          <div class="masonry-collage" id="collage"></div>
         </div>
       </section>
 
     </main>
 
     <footer class="footer">
-      <div class="wrap small">Dartmouth Quizbowl &bull; Hanover, NH</div>
+      <div class="wrap footer-inner">
+        <div class="small">Dartmouth Quizbowl &bull; Hanover, NH</div>
+        <a class="footer-ig" href="https://www.instagram.com/dartmouthquizbowl/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg><span>@dartmouthquizbowl</span></a>
+      </div>
     </footer>
   </div>
 </body>
