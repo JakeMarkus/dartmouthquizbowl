@@ -122,8 +122,21 @@ function setupStageBackground(data) {
     img.onerror = () => fig.remove();
     img.src = src;
   };
-  spawn();
-  setInterval(spawn, DUR - 1900);
+  let timer = 0;
+  const loop = () => { spawn(); timer = setTimeout(loop, DUR - 1900); };
+  loop();
+
+  // when the bonfire sits in the photo spot (narrow screens), an answer sends the photo away
+  // and holds the next one back for a few seconds so the fire can play
+  window.dsqbtPhotoBreak = () => {
+    if (!window.matchMedia('(max-width: 980px)').matches) return;
+    root.querySelectorAll('.fp').forEach(f => {
+      const a = f.animate([{ opacity: +getComputedStyle(f).opacity || 0 }, { opacity: 0 }], { duration: 450, easing: 'ease-in', fill: 'forwards' });
+      a.onfinish = () => f.remove();
+    });
+    clearTimeout(timer);
+    timer = setTimeout(loop, 5500);
+  };
 }
 
 // ── HOME ──────────────────────────────────────────────────────────────────────
@@ -574,6 +587,7 @@ function popButton(container, label, retry, onClick) {
 }
 
 function handleAnswer(btn, chosen, correct, card, container) {
+  if (window.dsqbtPhotoBreak) window.dsqbtPhotoBreak();
   card.querySelectorAll('.quiz-choice').forEach(b => { b.disabled = true; b.classList.add('quiz-choice--locked'); });
 
   if (chosen === correct) {
