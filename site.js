@@ -112,7 +112,7 @@ function setupStageBackground(data) {
     const sh = stage.getBoundingClientRect();
     const headEl = stage.querySelector('.quiz-head');
     const headTop = headEl ? headEl.getBoundingClientRect().top - sh.top : sh.height * 0.6;
-    const H = Math.max(96, Math.min(headTop - 44, 400));            // room above the trivia heading
+    const H = Math.max(96, Math.min(headTop - 44, 560));            // room above the trivia heading
     const W = Math.min(sh.width * 0.9, 640);
     const cy = 20 + H / 2;                                          // where it hovers (centre of the open sky)
     const fig = document.createElement('figure');
