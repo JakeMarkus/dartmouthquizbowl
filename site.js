@@ -105,16 +105,15 @@ function setupStageBackground(data) {
     return null;
   };
 
-  const DUR = 10500;
+  const DUR = 12500;
   const spawn = async () => {
     const src = await pick();
     if (!src) return;
     const sh = stage.getBoundingClientRect();
-    const headEl = stage.querySelector('.quiz-head');
-    const headTop = headEl ? headEl.getBoundingClientRect().top - sh.top : sh.height * 0.6;
-    const H = Math.max(96, Math.min(headTop - 44, 400));            // room above the trivia heading
+    const sky = parseFloat(getComputedStyle(stage).paddingTop) || sh.height * 0.5;   // the open area under the big banner
+    const H = Math.max(120, Math.min(sky - 70, 620));
     const W = Math.min(sh.width * 0.9, 640);
-    const cy = 20 + H / 2;                                          // where it hovers (centre of the open sky)
+    const cy = sky / 2;                                             // hovers in the middle of the open area
     const fig = document.createElement('figure');
     fig.className = 'fp';
     const img = document.createElement('img');
@@ -129,11 +128,11 @@ function setupStageBackground(data) {
       const startY = sh.height - cy + 80;                           // from below the bottom edge
       const T = (x, y, s, r) => `translate(-50%,-50%) translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${s}) rotate(${r.toFixed(2)}deg)`;
       const kf = [{ transform: T(0, startY, .1, -3), opacity: 0, offset: 0, easing: 'cubic-bezier(.2,.7,.2,1)' },
-                  { transform: T(0, 0, 1, 0), opacity: 1, offset: .2 }];
+                  { transform: T(0, 0, 1, 0), opacity: 1, offset: .3 }];
       const n = 9, ph = Math.random() * 6.28;
       for (let k = 1; k <= n; k++) {                                // the hover: a teeny bit of wobble
         const t = k / n;
-        kf.push({ transform: T(Math.sin(ph + t * 5) * 5, Math.cos(ph + t * 4) * 5, 1, Math.sin(ph + t * 3) * 1.1), opacity: 1, offset: .2 + t * .58 });
+        kf.push({ transform: T(Math.sin(ph + t * 5) * 5, Math.cos(ph + t * 4) * 5, 1, Math.sin(ph + t * 3) * 1.1), opacity: 1, offset: .3 + t * .5 });
       }
       kf.push({ transform: T(Math.sin(ph) * 14, -150, 1.12, 2), opacity: 0, offset: 1, easing: 'ease-in' });
       const anim = fig.animate(kf, { duration: DUR, easing: 'linear', fill: 'forwards' });
