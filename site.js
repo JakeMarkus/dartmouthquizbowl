@@ -139,17 +139,6 @@ function setupStageBackground(data) {
     clearTimeout(timer);
     timer = setTimeout(loop, 1200);
   });
-
-  window.dsqbtPhotoBreak = () => {
-    if (!window.matchMedia('(max-width: 980px)').matches) return;
-    Bonfire.hidePhoto(200);
-    root.querySelectorAll('.fp').forEach(f => {
-      const a = f.animate([{ opacity: +getComputedStyle(f).opacity || 0 }, { opacity: 0 }], { duration: 200, easing: 'ease-in', fill: 'forwards' });
-      a.onfinish = () => f.remove();
-    });
-    clearTimeout(timer);
-    timer = setTimeout(loop, 5500);
-  };
 }
 
 // ── HOME ──────────────────────────────────────────────────────────────────────
@@ -650,7 +639,6 @@ function handleAnswer(btn, chosen, correct, card, container) {
     const prev = streak;
     streak++;
     btn.classList.add('quiz-choice--correct');
-    if (window.dsqbtPhotoBreak) window.dsqbtPhotoBreak();
     setStreakEl(card, streak, prev);
     // vertical mode: the photo fades out first, so hold the fire back half a second to let people adjust
     const lag = window.matchMedia('(max-width: 980px)').matches ? 500 : 0;
