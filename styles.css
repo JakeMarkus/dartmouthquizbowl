@@ -100,7 +100,7 @@ main{flex:1}
   height:max(640px, calc(100vh - var(--head-h)));height:max(640px, calc(100svh - var(--head-h)));
   display:flex;background:#0d3a25;
 }
-.stage-bg{position:absolute;inset:0 0 150px 0;z-index:-4;overflow:hidden;background:#0d3a25}
+.stage-bg{position:absolute;inset:0;z-index:-4;overflow:hidden;background:#0d3a25}
 .stage-bg-layer{
   position:absolute;inset:-5%;background-size:cover;background-position:center;
   opacity:0;transition:opacity 1.4s ease;animation:bgFloat 26s ease-in-out infinite alternate;
