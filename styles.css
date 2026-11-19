@@ -102,13 +102,10 @@ main{flex:1}
 }
 .stage-bg{position:absolute;inset:0;z-index:-4;overflow:hidden;background:#0d3a25}
 .stage-bg-layer{
-  position:absolute;inset:-2%;
+  position:absolute;inset:-5%;background-size:cover;background-position:center;
   opacity:0;transition:opacity 1.4s ease;animation:bgFloat 26s ease-in-out infinite alternate;
 }
 .stage-bg-layer.is-active{opacity:1}
-/* whole photo, never cropped: the sharp picture sits inside the frame, a blurred copy fills the rest */
-.stage-bg-layer::before{content:"";position:absolute;inset:-30px;background:var(--img) center/cover no-repeat;filter:blur(28px) brightness(.82) saturate(1.1)}
-.stage-bg-layer::after{content:"";position:absolute;inset:0 0 110px 0;background:var(--img) center top/contain no-repeat}
 @keyframes bgFloat{0%{transform:translate3d(0,-1.6%,0) scale(1.03)}100%{transform:translate3d(0,1.6%,0) scale(1.07)}}
 .stage::before{ /* local shade behind the title only; photos stay clear everywhere else */
   content:"";position:absolute;inset:0;z-index:-3;

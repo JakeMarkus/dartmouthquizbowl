@@ -115,7 +115,7 @@ function setupStageBackground(data) {
     const src = await pick();
     if (!src) return;
     const next = layers[active], prev = layers[1 - active];
-    next.style.setProperty('--img', `url("${src}")`);
+    next.style.backgroundImage = `url("${src}")`;
     next.classList.add('is-active');
     prev.classList.remove('is-active');
     active = 1 - active;
