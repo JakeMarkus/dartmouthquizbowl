@@ -91,6 +91,7 @@ function setupStageBackground(data) {
     const dur = isNarrow() ? DUR_NARROW : DUR;
     const src = await pick();
     if (!src) return;
+    if (isNarrow()) { Bonfire.showPhoto(src, dur); return; }        // vertical mode: the picture sits on the bonfire itself
     const sh = stage.getBoundingClientRect();
     const headEl = stage.querySelector('.quiz-head');
     const headTop = headEl ? headEl.getBoundingClientRect().top - sh.top : sh.height * 0.6;
@@ -133,6 +134,7 @@ function setupStageBackground(data) {
   // and holds the next one back for a few seconds so the fire can play
   window.dsqbtPhotoBreak = () => {
     if (!window.matchMedia('(max-width: 980px)').matches) return;
+    Bonfire.hidePhoto(200);
     root.querySelectorAll('.fp').forEach(f => {
       const a = f.animate([{ opacity: +getComputedStyle(f).opacity || 0 }, { opacity: 0 }], { duration: 200, easing: 'ease-in', fill: 'forwards' });
       a.onfinish = () => f.remove();
@@ -366,6 +368,13 @@ const Bonfire = {
     sign.style.setProperty('--dx', '30px'); sign.style.setProperty('--dy', '236px'); sign.style.setProperty('--rot', '24deg'); sign.style.setProperty('--dl', '0s');
     tower.append(sign);
     svg.append(tower);
+    // a picture frame that sits on the logs but behind the flames (used in vertical mode)
+    this.photoRect = svgEl('rect', { fill: '#fff' });
+    this.photoImg = svgEl('image', { preserveAspectRatio: 'none' });
+    this.photoG = svgEl('g', { class: 'bf-photo', 'aria-hidden': 'true' }, [this.photoRect, this.photoImg]);
+    this.photoG.style.opacity = '0';
+    this.photoAnim = null;
+    svg.append(this.photoG);
     flames.setAttribute('class', 'flames');
     svg.append(flames); // in front of the logs
 
@@ -377,6 +386,30 @@ const Bonfire = {
 
 
     this.setStep(0);
+  },
+  showPhoto(src, dur) {
+    const g = this.photoG; if (!g) return;
+    const im = new Image();
+    im.onload = () => {
+      const BX = 180, BY = 36, BW = 264, BH = 140, pad = 4;          // the top half of the bonfire
+      const r = im.naturalWidth / im.naturalHeight;
+      let w = BW, h = w / r; if (h > BH) { h = BH; w = h * r; }
+      const x = BX - w / 2, y = BY + (BH - h) / 2;
+      this.photoRect.setAttribute('x', x - pad); this.photoRect.setAttribute('y', y - pad);
+      this.photoRect.setAttribute('width', w + pad * 2); this.photoRect.setAttribute('height', h + pad * 2);
+      this.photoImg.setAttribute('href', src);
+      ['x', 'y', 'width', 'height'].forEach((k, i) => this.photoImg.setAttribute(k, [x, y, w, h][i]));
+      if (this.photoAnim) this.photoAnim.cancel();
+      this.photoAnim = g.animate([{ opacity: 0, offset: 0 }, { opacity: .88, offset: .08 }, { opacity: .88, offset: .92 }, { opacity: 0, offset: 1 }],
+        { duration: dur, easing: 'linear', fill: 'forwards' });
+    };
+    im.src = src;
+  },
+  hidePhoto(ms) {
+    const g = this.photoG; if (!g || !this.photoAnim) return;
+    const cur = +getComputedStyle(g).opacity || 0;
+    this.photoAnim.cancel(); this.photoAnim = null;
+    this.photoAnim = g.animate([{ opacity: cur }, { opacity: 0 }], { duration: ms, easing: 'ease-in', fill: 'forwards' });
   },
   buildSparks(root) {
     const layer = el('div', { class: 'sparks', 'aria-hidden': 'true' });
@@ -553,7 +586,7 @@ function positionBonfire() {
     const stage = document.getElementById('stage'), card = document.getElementById('quizContainer');
     if (stage && card) {
       const sr = stage.getBoundingClientRect(), cardTop = card.getBoundingClientRect().top - sr.top;
-      const w = Math.max(200, Math.min(560, window.innerWidth * 0.96, (cardTop - 10) / 0.81));
+      const w = Math.max(200, Math.min(700, window.innerWidth * 1.15, (cardTop - 10) / 0.8));
       fire.style.setProperty('--fw', Math.round(w) + 'px');
       fire.style.setProperty('--fb', Math.round(sr.height - cardTop - w * 0.03) + 'px');
     }
