@@ -429,3 +429,6 @@ body[data-page="home"] .stage{height:max(560px,calc(100svh - var(--head-h)));scr
 html{scroll-snap-type:y proximity}
 body[data-page="home"] .banner-spacer{scroll-snap-align:start}
 @media (max-width:980px){body[data-page="home"] .stage{height:auto;min-height:max(560px,calc(100svh - var(--head-h)))}}
+
+.about{position:relative}
+.about::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:#000}
