@@ -390,3 +390,26 @@ h1,h2,h3,.person .name{font-family:"Bricolage Grotesque","Montserrat",sans-serif
 .quiz-head h2{font-weight:800;letter-spacing:-.02em}
 .quiz-win-body h3,.tournament h3,.contacts h3{font-weight:700;letter-spacing:-.015em}
 .person .name{font-weight:700;letter-spacing:-.01em;font-size:1.08rem}
+
+/* ── HOME: big banner that shrinks into the normal one as you scroll ── */
+body[data-page="home"]{--banner-big:clamp(300px,46vh,440px);--wp:24px}
+body[data-page="home"] .banner-spacer{height:var(--banner-big)}
+body[data-page="home"] .topbar{position:fixed;left:0;right:0;top:0;height:var(--bh,var(--banner-big))}
+body[data-page="home"] .topbar-inner{height:100%;position:relative;align-items:flex-start}
+body[data-page="home"] .nav{margin-left:auto;height:var(--head-h)}
+body[data-page="home"] .nav-toggle{margin:calc((var(--head-h) - 42px) / 2) 0 0 auto}
+body[data-page="home"] .brand{position:absolute;left:var(--wp);top:0;height:var(--head-h);
+  transform:translateY(calc((1 - var(--p,0)) * (var(--banner-big) - var(--head-h)) * .46))}
+body[data-page="home"] .brand-logo{height:calc(38px + (1 - var(--p,0)) * 30px)}
+body[data-page="home"] .brand-text{font-size:calc(.88rem + (1 - var(--p,0)) * (clamp(1.45rem,4.6vw,4.1rem) - .88rem));letter-spacing:calc(.1em + var(--p,0) * .1em)}
+body[data-page="home"] .banner-sub{position:absolute;left:var(--wp);bottom:30px;margin:0;font-size:clamp(.95rem,1.6vw,1.2rem);font-weight:500;color:rgba(255,255,255,.88);opacity:var(--sub,1)}
+.banner-sub{display:none}
+body[data-page="home"] .banner-sub{display:block}
+@media (max-width:860px){
+  body[data-page="home"] .nav{top:var(--head-h)}
+}
+@media (max-width:640px){body[data-page="home"]{--wp:18px}}
+@media (max-width:640px){
+  body[data-page="home"] .brand-logo{height:calc(32px + (1 - var(--p,0)) * 6px)}
+  body[data-page="home"] .brand-text{white-space:normal;line-height:1.08;max-width:calc(100vw - 2 * var(--wp) - 64px - 54px);font-size:calc(.74rem + (1 - var(--p,0)) * (clamp(1.2rem,6.4vw,1.7rem) - .74rem))}
+}

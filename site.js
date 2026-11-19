@@ -44,6 +44,27 @@ function setupHeader() {
   document.addEventListener('click', e => { if (!bar.contains(e.target)) setOpen(false); });
 }
 
+// home page: the banner starts big and, as you scroll, shrinks (its bottom edge rides the top of the page below)
+// into the normal compact banner, where it stays put.
+function setupBigBanner() {
+  const bar = document.getElementById('topbar');
+  const spacer = document.querySelector('.banner-spacer');
+  if (!bar || !spacer) return;
+  const root = document.documentElement;
+  const update = () => {
+    const small = parseFloat(getComputedStyle(root).getPropertyValue('--head-h')) || 64;
+    const big = spacer.offsetHeight;
+    const h = Math.max(small, big - window.scrollY);
+    const p = big > small ? (big - h) / (big - small) : 1;
+    bar.style.setProperty('--bh', h.toFixed(1) + 'px');
+    bar.style.setProperty('--p', p.toFixed(4));
+    bar.style.setProperty('--sub', Math.max(0, 1 - p * 3).toFixed(3));
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+}
+
 function setupStageBackground(data) {
   const root = document.getElementById('stageBg');
   const photos = ((data.home && data.home.collage) || []).map(c => c && c.src).filter(Boolean);
@@ -485,14 +506,10 @@ function sizeQuizCard(container) {
 }
 
 function positionBonfire() {
-  const fire = document.getElementById('bonfire'), h1 = document.getElementById('heroTitle');
-  if (!fire || !h1) return;
+  const fire = document.getElementById('bonfire'), col = document.querySelector('.stage-left');
+  if (!fire || !col) return;
   if (!window.matchMedia('(min-width: 981px)').matches) { fire.style.left = ''; return; }
-  const host = fire.offsetParent.getBoundingClientRect(), r = h1.getBoundingClientRect();
-  const w = Array.from(h1.childNodes).length ? h1.scrollWidth : r.width;
-  const range = document.createRange(); range.selectNodeContents(h1);
-  const tr = range.getBoundingClientRect();
-  fire.style.left = Math.round(tr.left + tr.width / 2 - host.left - fire.offsetWidth / 2) + 'px';
+  fire.style.left = Math.round(col.getBoundingClientRect().width / 2 - fire.offsetWidth / 2) + 'px';
 }
 
 function renderQuiz(data) {
@@ -795,6 +812,7 @@ function renderContacts(data) {
 async function main() {
   setActiveNav();
   setupHeader();
+  setupBigBanner();
   try {
     const data = await loadContent();
     renderHome(data);
