@@ -65,10 +65,12 @@ function setupBigBanner() {
   window.addEventListener('resize', update);
 }
 
+// photos drift up from the bottom like big embers, grow to full size, hover (with a little wobble)
+// above the bonfire and trivia card, then float away. One at a time, whole picture always visible.
 function setupStageBackground(data) {
   const root = document.getElementById('photoPanel');
-  if (!root) return;
-  // every photo on the site: the home collage plus all tournament photos
+  const stage = document.getElementById('stage');
+  if (!root || !stage) return;
   const photos = [];
   const add = s => { if (s && !photos.includes(s)) photos.push(s); };
   ((data.home && data.home.collage) || []).forEach(c => add(c && c.src));
@@ -78,15 +80,9 @@ function setupStageBackground(data) {
     const k = Math.floor(Math.random() * (i + 1));
     [photos[i], photos[k]] = [photos[k], photos[i]];
   }
-  const layers = [0, 1].map(() => {
-    const d = document.createElement('div');
-    d.className = 'stage-bg-layer';
-    d.append(document.createElement('img'));
-    root.append(d);
-    return d;
-  });
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // learn each photo's shape as it loads, so we can show the ones that fit the viewer's screen
+  // learn each photo's shape as it loads so we can favour the ones that fit the viewer's screen
   const shape = new Map(), waiters = [];
   photos.forEach(src => {
     const im = new Image();
@@ -98,31 +94,56 @@ function setupStageBackground(data) {
   let pos = 0;
   const pick = async () => {
     for (let guard = 0; guard < 400; guard++) {
-      const want = root.clientWidth >= root.clientHeight ? 'l' : 'p';
+      const want = window.innerWidth >= window.innerHeight ? 'l' : 'p';
       for (let t = 0; t < photos.length; t++) {
         const src = photos[(pos + t) % photos.length];
         if (shape.get(src) === want) { pos = (pos + t + 1) % photos.length; return src; }
       }
-      if (shape.size >= photos.length) {            // everything loaded, none of the right shape: use any
-        const any = photos.find(s => shape.get(s) && shape.get(s) !== 'x');
-        return any || null;
-      }
+      if (shape.size >= photos.length) return photos.find(s => shape.get(s) && shape.get(s) !== 'x') || null;
       await settled();
     }
     return null;
   };
-  let active = 0;
-  const show = async () => {
+
+  const DUR = 10500;
+  const spawn = async () => {
     const src = await pick();
     if (!src) return;
-    const next = layers[active], prev = layers[1 - active];
-    next.firstChild.src = src;
-    next.classList.add('is-active');
-    prev.classList.remove('is-active');
-    active = 1 - active;
+    const sh = stage.getBoundingClientRect();
+    const headEl = stage.querySelector('.quiz-head');
+    const headTop = headEl ? headEl.getBoundingClientRect().top - sh.top : sh.height * 0.6;
+    const H = Math.max(96, Math.min(headTop - 44, 400));            // room above the trivia heading
+    const W = Math.min(sh.width * 0.9, 640);
+    const cy = 20 + H / 2;                                          // where it hovers (centre of the open sky)
+    const fig = document.createElement('figure');
+    fig.className = 'fp';
+    const img = document.createElement('img');
+    img.alt = '';
+    img.style.maxHeight = H + 'px';
+    img.style.maxWidth = W + 'px';
+    fig.append(img);
+    fig.style.top = cy + 'px';
+    root.append(fig);
+    img.onload = () => {
+      if (reduce) { fig.style.opacity = '1'; fig.style.transform = 'translate(-50%,-50%)'; setTimeout(() => fig.remove(), DUR); return; }
+      const startY = sh.height - cy + 80;                           // from below the bottom edge
+      const T = (x, y, s, r) => `translate(-50%,-50%) translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${s}) rotate(${r.toFixed(2)}deg)`;
+      const kf = [{ transform: T(0, startY, .1, -3), opacity: 0, offset: 0, easing: 'cubic-bezier(.2,.7,.2,1)' },
+                  { transform: T(0, 0, 1, 0), opacity: 1, offset: .2 }];
+      const n = 9, ph = Math.random() * 6.28;
+      for (let k = 1; k <= n; k++) {                                // the hover: a teeny bit of wobble
+        const t = k / n;
+        kf.push({ transform: T(Math.sin(ph + t * 5) * 5, Math.cos(ph + t * 4) * 5, 1, Math.sin(ph + t * 3) * 1.1), opacity: 1, offset: .2 + t * .58 });
+      }
+      kf.push({ transform: T(Math.sin(ph) * 14, -150, 1.12, 2), opacity: 0, offset: 1, easing: 'ease-in' });
+      const anim = fig.animate(kf, { duration: DUR, easing: 'linear', fill: 'forwards' });
+      anim.onfinish = () => fig.remove();
+    };
+    img.onerror = () => fig.remove();
+    img.src = src;
   };
-  show();
-  setInterval(show, 6000);
+  spawn();
+  setInterval(spawn, DUR - 1900);
 }
 
 // ── HOME ──────────────────────────────────────────────────────────────────────

@@ -417,3 +417,13 @@ body[data-page="home"] .banner-sub{display:block}
 .photo-band{background:#04100a;padding:24px 0}
 .photo-frame{position:relative;margin:0 auto;width:min(100%,1040px);aspect-ratio:16/9;max-height:60vh;background:#0a1b13;overflow:hidden}
 @media (orientation:portrait){.photo-frame{aspect-ratio:3/4;max-height:68vh;width:min(100%,560px)}}
+
+/* ── floating photos ── */
+.float-photos{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.fp{position:absolute;left:50%;margin:0;transform:translate(-50%,-50%) scale(.1);opacity:0;will-change:transform,opacity;
+  padding:6px;background:rgba(255,255,255,.96);box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.fp img{display:block;max-width:100%;width:auto;height:auto;object-fit:contain}
+/* the first screen: banner + game fit on one screen */
+body[data-page="home"]{--banner-big:clamp(190px,25vh,280px)}
+body[data-page="home"] .stage{height:max(480px,calc(100svh - var(--banner-big)))}
+@media (max-width:980px){body[data-page="home"] .stage{height:auto;min-height:max(480px,calc(100svh - var(--banner-big)))}}
