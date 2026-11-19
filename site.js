@@ -67,8 +67,13 @@ function setupBigBanner() {
 
 function setupStageBackground(data) {
   const root = document.getElementById('stageBg');
-  const photos = ((data.home && data.home.collage) || []).map(c => c && c.src).filter(Boolean);
-  if (!root || !photos.length) return;
+  if (!root) return;
+  // every photo on the site: the home collage plus all tournament photos
+  const photos = [];
+  const add = s => { if (s && !photos.includes(s)) photos.push(s); };
+  ((data.home && data.home.collage) || []).forEach(c => add(c && c.src));
+  (data.tournaments || []).forEach(t => (t.photos || []).forEach(p => add(p && p.src)));
+  if (!photos.length) return;
   for (let i = photos.length - 1; i > 0; i--) {
     const k = Math.floor(Math.random() * (i + 1));
     [photos[i], photos[k]] = [photos[k], photos[i]];
@@ -79,25 +84,41 @@ function setupStageBackground(data) {
     root.append(d);
     return d;
   });
-  const preload = src => new Promise(res => {
+
+  // learn each photo's shape as it loads, so we can show the ones that fit the viewer's screen
+  const shape = new Map(), waiters = [];
+  photos.forEach(src => {
     const im = new Image();
-    im.onload = () => res(true);
-    im.onerror = () => res(false);
+    im.onload = () => { shape.set(src, im.naturalWidth >= im.naturalHeight ? 'l' : 'p'); waiters.splice(0).forEach(f => f()); };
+    im.onerror = () => { shape.set(src, 'x'); waiters.splice(0).forEach(f => f()); };
     im.src = src;
   });
-  let idx = 0, active = 0;
-  const show = async () => {
-    for (let t = 0; t < photos.length; t++) {
-      const src = photos[idx++ % photos.length];
-      if (await preload(src)) {
-        const next = layers[active], prev = layers[1 - active];
-        next.style.backgroundImage = `url("${src}")`;
-        next.classList.add('is-active');
-        prev.classList.remove('is-active');
-        active = 1 - active;
-        return;
+  const settled = () => new Promise(r => waiters.push(r));
+  let pos = 0;
+  const pick = async () => {
+    for (let guard = 0; guard < 400; guard++) {
+      const want = root.clientWidth >= root.clientHeight ? 'l' : 'p';
+      for (let t = 0; t < photos.length; t++) {
+        const src = photos[(pos + t) % photos.length];
+        if (shape.get(src) === want) { pos = (pos + t + 1) % photos.length; return src; }
       }
+      if (shape.size >= photos.length) {            // everything loaded, none of the right shape: use any
+        const any = photos.find(s => shape.get(s) && shape.get(s) !== 'x');
+        return any || null;
+      }
+      await settled();
     }
+    return null;
+  };
+  let active = 0;
+  const show = async () => {
+    const src = await pick();
+    if (!src) return;
+    const next = layers[active], prev = layers[1 - active];
+    next.style.backgroundImage = `url("${src}")`;
+    next.classList.add('is-active');
+    prev.classList.remove('is-active');
+    active = 1 - active;
   };
   show();
   setInterval(show, 6000);
