@@ -82,8 +82,28 @@ function setupStageBackground(data) {
   }
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // learn each photo's shape as it loads so we can favour the ones that fit the viewer's screen
+  const shape = new Map(), waiters = [];
+  photos.forEach(src => {
+    const im = new Image();
+    im.onload = () => { shape.set(src, im.naturalWidth >= im.naturalHeight ? 'l' : 'p'); waiters.splice(0).forEach(f => f()); };
+    im.onerror = () => { shape.set(src, 'x'); waiters.splice(0).forEach(f => f()); };
+    im.src = src;
+  });
+  const settled = () => new Promise(r => waiters.push(r));
   let pos = 0;
-  const pick = async () => photos[pos++ % photos.length];
+  const pick = async () => {
+    for (let guard = 0; guard < 400; guard++) {
+      const want = window.innerWidth >= window.innerHeight ? 'l' : 'p';
+      for (let t = 0; t < photos.length; t++) {
+        const src = photos[(pos + t) % photos.length];
+        if (shape.get(src) === want) { pos = (pos + t + 1) % photos.length; return src; }
+      }
+      if (shape.size >= photos.length) return photos.find(s => shape.get(s) && shape.get(s) !== 'x') || null;
+      await settled();
+    }
+    return null;
+  };
 
   const DUR = 10500;
   const spawn = async () => {
@@ -124,25 +144,6 @@ function setupStageBackground(data) {
   };
   spawn();
   setInterval(spawn, DUR - 1900);
-
-  // the bonfire and trivia card start hidden and pop up out of nowhere on the first scroll
-  stage.classList.add('pre');
-  let popped = false;
-  const pop = () => {
-    if (popped || window.scrollY < 40) return;
-    popped = true;
-    stage.classList.remove('pre');
-    window.removeEventListener('scroll', pop);
-    if (reduce) return;
-    stage.querySelectorAll('.bonfire,.stage-right').forEach((el, i) => el.animate(
-      [{ transform: 'scale(.2)', opacity: 0, offset: 0 },
-       { transform: 'scale(1.07)', opacity: 1, offset: .65 },
-       { transform: 'scale(1)', opacity: 1, offset: 1 }],
-      { duration: 520, delay: i * 90, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' }
-    ));
-  };
-  window.addEventListener('scroll', pop, { passive: true });
-  pop();
 }
 
 // ── HOME ──────────────────────────────────────────────────────────────────────

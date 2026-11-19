@@ -429,6 +429,3 @@ body[data-page="home"] .stage{height:max(560px,calc(100svh - var(--head-h)));scr
 html{scroll-snap-type:y proximity}
 body[data-page="home"] .banner-spacer{scroll-snap-align:start}
 @media (max-width:980px){body[data-page="home"] .stage{height:auto;min-height:max(560px,calc(100svh - var(--head-h)))}}
-
-.stage.pre .bonfire,.stage.pre .stage-right{opacity:0;visibility:hidden}
-.bonfire,.stage-right{transform-origin:50% 100%}
