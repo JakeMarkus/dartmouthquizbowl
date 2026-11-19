@@ -138,6 +138,42 @@ function scheduleCollageLayout(collage) {
     raf = requestAnimationFrame(() => layoutCollage(collage));
   };
 }
+// big title + typed subtext; the subtext fades as you scroll and the title hands over to the banner
+function setupHero(lines) {
+  const hero = document.getElementById('hero');
+  if (!hero) return;
+  const bar = document.getElementById('topbar');
+  const title = document.getElementById('heroTitle');
+  const out = document.getElementById('heroTypeText');
+  const L = (Array.isArray(lines) && lines.length ? lines : ['Imagine Jeopardy, but with two teams of four.']).filter(Boolean);
+  const update = () => {
+    const y = window.scrollY;
+    hero.style.setProperty('--sub', Math.max(0, 1 - y / 160).toFixed(3));
+    if (bar && title) {
+      const passed = title.getBoundingClientRect().bottom < (bar.offsetHeight + 6);
+      bar.classList.toggle('brand-on', passed);
+    }
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  if (!out) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { out.textContent = L[0]; return; }
+  let li = 0, ci = 0, erasing = false;
+  const tick = () => {
+    const s = L[li];
+    if (!erasing) {
+      ci++; out.textContent = s.slice(0, ci);
+      if (ci >= s.length) { erasing = true; return setTimeout(tick, 2400); }
+      return setTimeout(tick, 48 + Math.random() * 40);
+    }
+    ci--; out.textContent = s.slice(0, ci);
+    if (ci <= 0) { erasing = false; li = (li + 1) % L.length; return setTimeout(tick, 450); }
+    setTimeout(tick, 20);
+  };
+  setTimeout(tick, 500);
+}
+
 function renderHome(data) {
   const heroTitle = document.getElementById('heroTitle');
   const heroBlurb = document.getElementById('heroBlurb');
@@ -147,6 +183,7 @@ function renderHome(data) {
 
   if (heroTitle) heroTitle.textContent = data.home.heroTitle;
   if (heroBlurb) heroBlurb.textContent = data.home.heroBlurb;
+  setupHero(data.home.heroLines);
   if (introTitle) introTitle.textContent = data.home.introTitle;
   if (introText)  introText.textContent  = data.home.introText;
 
@@ -485,14 +522,11 @@ function sizeQuizCard(container) {
 }
 
 function positionBonfire() {
-  const fire = document.getElementById('bonfire'), h1 = document.getElementById('heroTitle');
-  if (!fire || !h1) return;
+  const fire = document.getElementById('bonfire'), col = document.querySelector('.stage-left');
+  if (!fire || !col) return;
   if (!window.matchMedia('(min-width: 981px)').matches) { fire.style.left = ''; return; }
-  const host = fire.offsetParent.getBoundingClientRect(), r = h1.getBoundingClientRect();
-  const w = Array.from(h1.childNodes).length ? h1.scrollWidth : r.width;
-  const range = document.createRange(); range.selectNodeContents(h1);
-  const tr = range.getBoundingClientRect();
-  fire.style.left = Math.round(tr.left + tr.width / 2 - host.left - fire.offsetWidth / 2) + 'px';
+  const r = col.getBoundingClientRect();
+  fire.style.left = Math.round(r.width / 2 - fire.offsetWidth / 2) + 'px';
 }
 
 function renderQuiz(data) {

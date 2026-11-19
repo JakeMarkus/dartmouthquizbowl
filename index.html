@@ -32,15 +32,21 @@
 
     <main>
 
-      <!-- STAGE: title + bonfire (left), trivia (right) -->
+      <!-- HERO: big title with typed subtext; shrinks into the banner as you scroll -->
+      <section class="hero" id="hero">
+        <div class="wrap hero-inner">
+          <div class="kicker">The Big Green trivia team</div>
+          <h1 id="heroTitle"></h1>
+          <p class="hero-type" id="heroType" aria-label="Dartmouth Quizbowl"><span id="heroTypeText"></span><span class="caret" aria-hidden="true"></span></p>
+        </div>
+      </section>
+
+      <!-- STAGE: bonfire (left), trivia (right) -->
       <section class="stage" id="stage">
         <div class="stage-bg" id="stageBg" aria-hidden="true"></div>
         <div class="pines" aria-hidden="true"><div class="pines-back"></div><div class="pines-front"></div></div>
         <div class="wrap stage-grid">
           <div class="stage-left">
-            <div class="kicker">The Big Green trivia team</div>
-            <h1 id="heroTitle"></h1>
-            <p id="heroBlurb"></p>
             <div class="bonfire" id="bonfire" aria-hidden="true"></div>
           </div>
           <div class="stage-right">
