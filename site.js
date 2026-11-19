@@ -125,24 +125,33 @@ function setupStageBackground(data) {
   spawn();
   setInterval(spawn, DUR - 1900);
 
-  // the bonfire and trivia card start hidden and pop up out of nowhere on the first scroll
+  // the bonfire and trivia card start hidden, pop up slowly once you scroll down, and go away when you scroll back to the top
   stage.classList.add('pre');
-  let popped = false;
-  const pop = () => {
-    if (popped || window.scrollY < 40) return;
-    popped = true;
-    stage.classList.remove('pre');
-    window.removeEventListener('scroll', pop);
-    if (reduce) return;
-    stage.querySelectorAll('.bonfire,.stage-right').forEach((el, i) => el.animate(
-      [{ transform: 'scale(.2)', opacity: 0, offset: 0 },
-       { transform: 'scale(1.07)', opacity: 1, offset: .65 },
-       { transform: 'scale(1)', opacity: 1, offset: 1 }],
-      { duration: 520, delay: i * 90, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' }
-    ));
+  let shown = false, hideTimer = 0;
+  const els = () => [...stage.querySelectorAll('.bonfire,.stage-right')];
+  const toggle = () => {
+    const want = window.scrollY >= 40;
+    if (want === shown) return;
+    shown = want;
+    clearTimeout(hideTimer);
+    els().forEach(el => el.getAnimations().forEach(a => a.cancel()));
+    if (want) {
+      stage.classList.remove('pre');
+      if (!reduce) els().forEach((el, i) => el.animate(
+        [{ transform: 'scale(.15)', opacity: 0, offset: 0 },
+         { transform: 'scale(1.05)', opacity: 1, offset: .7 },
+         { transform: 'scale(1)', opacity: 1, offset: 1 }],
+        { duration: 1500, delay: i * 200, easing: 'cubic-bezier(.25,.7,.3,1)', fill: 'backwards' }));
+    } else if (reduce) {
+      stage.classList.add('pre');
+    } else {
+      els().forEach(el => el.animate([{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(.15)', opacity: 0 }],
+        { duration: 400, easing: 'ease-in', fill: 'forwards' }));
+      hideTimer = setTimeout(() => { stage.classList.add('pre'); els().forEach(el => el.getAnimations().forEach(a => a.cancel())); }, 420);
+    }
   };
-  window.addEventListener('scroll', pop, { passive: true });
-  pop();
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
 }
 
 // ── HOME ──────────────────────────────────────────────────────────────────────
