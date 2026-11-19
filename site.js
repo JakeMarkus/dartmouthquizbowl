@@ -132,6 +132,14 @@ function setupStageBackground(data) {
 
   // when the bonfire sits in the photo spot (narrow screens), an answer sends the photo away
   // and holds the next one back for a few seconds so the fire can play
+  // crossing into / out of vertical mode: clear whatever photo is showing right away
+  window.matchMedia('(max-width: 980px)').addEventListener('change', () => {
+    root.querySelectorAll('.fp').forEach(f => { f.getAnimations().forEach(a => a.cancel()); f.remove(); });
+    Bonfire.hidePhoto(1);
+    clearTimeout(timer);
+    timer = setTimeout(loop, 1200);
+  });
+
   window.dsqbtPhotoBreak = () => {
     if (!window.matchMedia('(max-width: 980px)').matches) return;
     Bonfire.hidePhoto(200);
@@ -391,7 +399,7 @@ const Bonfire = {
     const g = this.photoG; if (!g) return;
     const im = new Image();
     im.onload = () => {
-      const BX = 180, BY = 36, BW = 264, BH = 140, pad = 4;          // the top half of the bonfire
+      const BX = 180, BY = 76, BW = 264, BH = 140, pad = 4;          // upper half of the bonfire, just under the DSQBT plaque
       const r = im.naturalWidth / im.naturalHeight;
       let w = BW, h = w / r; if (h > BH) { h = BH; w = h * r; }
       const x = BX - w / 2, y = BY + (BH - h) / 2;
@@ -400,7 +408,7 @@ const Bonfire = {
       this.photoImg.setAttribute('href', src);
       ['x', 'y', 'width', 'height'].forEach((k, i) => this.photoImg.setAttribute(k, [x, y, w, h][i]));
       if (this.photoAnim) this.photoAnim.cancel();
-      this.photoAnim = g.animate([{ opacity: 0, offset: 0 }, { opacity: .88, offset: .08 }, { opacity: .88, offset: .92 }, { opacity: 0, offset: 1 }],
+      this.photoAnim = g.animate([{ opacity: 0, offset: 0 }, { opacity: 1, offset: .08 }, { opacity: 1, offset: .92 }, { opacity: 0, offset: 1 }],
         { duration: dur, easing: 'linear', fill: 'forwards' });
     };
     im.src = src;
