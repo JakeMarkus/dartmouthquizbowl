@@ -65,39 +65,6 @@ function setupBigBanner() {
   window.addEventListener('resize', update);
 }
 
-// a place that shows every photo whole (never cropped), one at a time
-function setupReel(data) {
-  const sec = document.getElementById('reel');
-  const img = document.getElementById('reelImg');
-  const frame = document.getElementById('reelFrame');
-  const capEl = document.getElementById('reelCap');
-  const cntEl = document.getElementById('reelCount');
-  if (!sec || !img || !frame) return;
-  const items = [], seen = new Set();
-  const add = (src, cap) => { if (src && !seen.has(src)) { seen.add(src); items.push({ src, cap: cap || '' }); } };
-  (data.tournaments || []).forEach(t => (t.photos || []).forEach(p => add(p && p.src, [p && p.caption, t.name].filter(Boolean).join('  ·  '))));
-  ((data.home && data.home.collage) || []).forEach(c => add(c && c.src, ''));
-  if (!items.length) return;
-  for (let i = items.length - 1; i > 0; i--) { const k = Math.floor(Math.random() * (i + 1)); [items[i], items[k]] = [items[k], items[i]]; }
-  sec.hidden = false;
-  let i = 0, timer = null;
-  const go = n => {
-    i = (n + items.length) % items.length;
-    const it = items[i];
-    img.src = it.src; img.alt = it.cap;
-    capEl.textContent = it.cap;
-    cntEl.textContent = (i + 1) + ' / ' + items.length;
-    const pre = new Image(); pre.src = items[(i + 1) % items.length].src;
-  };
-  const restart = () => { clearInterval(timer); timer = setInterval(() => go(i + 1), 7000); };
-  go(0); restart();
-  frame.querySelector('.reel-prev').addEventListener('click', () => { go(i - 1); restart(); });
-  frame.querySelector('.reel-next').addEventListener('click', () => { go(i + 1); restart(); });
-  frame.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') { go(i - 1); restart(); } if (e.key === 'ArrowRight') { go(i + 1); restart(); } });
-  frame.addEventListener('mouseenter', () => clearInterval(timer));
-  frame.addEventListener('mouseleave', restart);
-}
-
 function setupStageBackground(data) {
   const root = document.getElementById('stageBg');
   if (!root) return;
@@ -875,7 +842,6 @@ async function main() {
     renderContacts(data);
     renderQuiz(data);
     setupStageBackground(data);
-  setupReel(data);
   } catch (err) {
     console.error(err);
     document.body.insertAdjacentHTML('afterbegin', `<div style="padding:16px;border-bottom:1px solid #c00;background:#fff3f3;color:#700">
