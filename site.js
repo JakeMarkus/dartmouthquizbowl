@@ -611,13 +611,18 @@ function handleAnswer(btn, chosen, correct, card, container) {
     btn.classList.add('quiz-choice--correct');
     if (window.dsqbtPhotoBreak) window.dsqbtPhotoBreak();
     setStreakEl(card, streak, prev);
-    if (streak % CYCLE === 0) {
-      // full blaze, then it comes crashing down; the quiz carries on
-      Bonfire.setStep(CYCLE - 1);
-      setTimeout(() => Bonfire.collapse(), 500);
-    } else {
-      Bonfire.setStep(streak % CYCLE);
-    }
+    // vertical mode: the photo fades out first, so hold the fire back half a second to let people adjust
+    const lag = window.matchMedia('(max-width: 980px)').matches ? 500 : 0;
+    const fireStep = streak;
+    setTimeout(() => {
+      if (fireStep % CYCLE === 0) {
+        // full blaze, then it comes crashing down; the quiz carries on
+        Bonfire.setStep(CYCLE - 1);
+        setTimeout(() => Bonfire.collapse(), 500);
+      } else {
+        Bonfire.setStep(fireStep % CYCLE);
+      }
+    }, lag);
     popButton(container, 'Next question →', false, () => showNextQuestion(container));
   } else {
     streak = 0;
