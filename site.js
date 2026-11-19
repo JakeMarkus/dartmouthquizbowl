@@ -134,7 +134,7 @@ function setupStageBackground(data) {
   window.dsqbtPhotoBreak = () => {
     if (!window.matchMedia('(max-width: 980px)').matches) return;
     root.querySelectorAll('.fp').forEach(f => {
-      const a = f.animate([{ opacity: +getComputedStyle(f).opacity || 0 }, { opacity: 0 }], { duration: 450, easing: 'ease-in', fill: 'forwards' });
+      const a = f.animate([{ opacity: +getComputedStyle(f).opacity || 0 }, { opacity: 0 }], { duration: 200, easing: 'ease-in', fill: 'forwards' });
       a.onfinish = () => f.remove();
     });
     clearTimeout(timer);
