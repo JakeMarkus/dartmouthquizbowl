@@ -85,8 +85,10 @@ function setupStageBackground(data) {
   let pos = 0;
   const pick = async () => photos[pos++ % photos.length];
 
-  const DUR = 10500;
+  const DUR = 10500, DUR_NARROW = 7000;                           // vertical mode: photos stay a shorter time
+  const isNarrow = () => window.matchMedia('(max-width: 980px)').matches;
   const spawn = async () => {
+    const dur = isNarrow() ? DUR_NARROW : DUR;
     const src = await pick();
     if (!src) return;
     const sh = stage.getBoundingClientRect();
@@ -105,7 +107,7 @@ function setupStageBackground(data) {
     fig.style.top = cy + 'px';
     root.append(fig);
     img.onload = () => {
-      if (reduce) { fig.style.opacity = '.86'; fig.style.transform = 'translate(-50%,-50%)'; setTimeout(() => fig.remove(), DUR); return; }
+      if (reduce) { fig.style.opacity = '.86'; fig.style.transform = 'translate(-50%,-50%)'; setTimeout(() => fig.remove(), dur); return; }
       const startY = sh.height - cy + 80;                           // from below the bottom edge
       const T = (x, y, s, r) => `translate(-50%,-50%) translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${s}) rotate(${r.toFixed(2)}deg)`;
       const kf = [{ transform: T(0, startY, .1, -3), opacity: 0, offset: 0, easing: 'cubic-bezier(.2,.7,.2,1)' },
@@ -116,14 +118,14 @@ function setupStageBackground(data) {
         kf.push({ transform: T(Math.sin(ph + t * 5) * 5, Math.cos(ph + t * 4) * 5, 1, Math.sin(ph + t * 3) * 1.1), opacity: .86, offset: .2 + t * .58 });
       }
       kf.push({ transform: T(Math.sin(ph) * 14, -150, 1.12, 2), opacity: 0, offset: 1, easing: 'ease-in' });
-      const anim = fig.animate(kf, { duration: DUR, easing: 'linear', fill: 'forwards' });
+      const anim = fig.animate(kf, { duration: dur, easing: 'linear', fill: 'forwards' });
       anim.onfinish = () => fig.remove();
     };
     img.onerror = () => fig.remove();
     img.src = src;
   };
   let timer = 0;
-  const gap = () => window.matchMedia('(max-width: 980px)').matches ? DUR + 3500 : DUR - 1900;   // vertical mode: leave the fire visible between photos
+  const gap = () => isNarrow() ? DUR_NARROW + 3500 : DUR - 1900;   // vertical mode: leave the fire visible between photos
   const loop = () => { spawn(); timer = setTimeout(loop, gap()); };
   loop();
 
@@ -601,13 +603,13 @@ function popButton(container, label, retry, onClick) {
 }
 
 function handleAnswer(btn, chosen, correct, card, container) {
-  if (window.dsqbtPhotoBreak) window.dsqbtPhotoBreak();
   card.querySelectorAll('.quiz-choice').forEach(b => { b.disabled = true; b.classList.add('quiz-choice--locked'); });
 
   if (chosen === correct) {
     const prev = streak;
     streak++;
     btn.classList.add('quiz-choice--correct');
+    if (window.dsqbtPhotoBreak) window.dsqbtPhotoBreak();
     setStreakEl(card, streak, prev);
     if (streak % CYCLE === 0) {
       // full blaze, then it comes crashing down; the quiz carries on
