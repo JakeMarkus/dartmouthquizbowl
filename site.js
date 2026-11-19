@@ -66,7 +66,7 @@ function setupBigBanner() {
 }
 
 function setupStageBackground(data) {
-  const root = document.getElementById('stageBg');
+  const root = document.getElementById('photoPanel');
   if (!root) return;
   // every photo on the site: the home collage plus all tournament photos
   const photos = [];
