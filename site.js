@@ -82,28 +82,8 @@ function setupStageBackground(data) {
   }
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // learn each photo's shape as it loads so we can favour the ones that fit the viewer's screen
-  const shape = new Map(), waiters = [];
-  photos.forEach(src => {
-    const im = new Image();
-    im.onload = () => { shape.set(src, im.naturalWidth >= im.naturalHeight ? 'l' : 'p'); waiters.splice(0).forEach(f => f()); };
-    im.onerror = () => { shape.set(src, 'x'); waiters.splice(0).forEach(f => f()); };
-    im.src = src;
-  });
-  const settled = () => new Promise(r => waiters.push(r));
   let pos = 0;
-  const pick = async () => {
-    for (let guard = 0; guard < 400; guard++) {
-      const want = window.innerWidth >= window.innerHeight ? 'l' : 'p';
-      for (let t = 0; t < photos.length; t++) {
-        const src = photos[(pos + t) % photos.length];
-        if (shape.get(src) === want) { pos = (pos + t + 1) % photos.length; return src; }
-      }
-      if (shape.size >= photos.length) return photos.find(s => shape.get(s) && shape.get(s) !== 'x') || null;
-      await settled();
-    }
-    return null;
-  };
+  const pick = async () => photos[pos++ % photos.length];
 
   const DUR = 10500;
   const spawn = async () => {
