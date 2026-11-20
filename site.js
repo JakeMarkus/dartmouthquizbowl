@@ -631,9 +631,17 @@ function positionBonfire() {
     const w = Math.max(200, Math.min(900, window.innerWidth * 1.5, (zone - 12) / 0.8));
     fire.style.setProperty('--fw', Math.round(w) + 'px');
     fire.style.setProperty('--ft', Math.round(-w * 0.089) + 'px');   // positioned inside the grid, which starts a 10px gap under the pictures
+    // the trees stand around the bonfire's base instead of along the bottom of the section
+    const pines = document.querySelector('.pines'), grid = document.querySelector('.stage-grid');
+    if (pines && grid) {
+      const baseY = grid.offsetTop + w * 0.805;
+      pines.style.bottom = 'auto';
+      pines.style.top = Math.round(baseY - pines.offsetHeight + 10) + 'px';
+    }
     return;
   }
   fire.style.removeProperty('--fw'); fire.style.removeProperty('--ft');
+  const pn = document.querySelector('.pines'); if (pn) { pn.style.top = ''; pn.style.bottom = ''; }
   fire.style.left = Math.round(col.getBoundingClientRect().width / 2 - fire.offsetWidth / 2) + 'px';
 }
 
