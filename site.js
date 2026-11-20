@@ -61,7 +61,14 @@ function setupBigBanner() {
     bar.style.setProperty('--sub', Math.max(0, 1 - p * 3).toFixed(3));
   };
   update();
-  window.addEventListener('scroll', update, { passive: true });
+  let ticking = false, idle = 0;
+  window.addEventListener('scroll', () => {
+    root.classList.add('is-scrolling');
+    clearTimeout(idle); idle = setTimeout(() => root.classList.remove('is-scrolling'), 160);
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; update(); });
+  }, { passive: true });
   window.addEventListener('resize', update);
 }
 
@@ -318,7 +325,7 @@ const Bonfire = {
     };
     const stop = (o, c) => svgEl('stop', { offset: o, 'stop-color': c });
     const vgrad = (id, a, b2) => svgEl('linearGradient', { id, x1: 0, y1: 1, x2: 0, y2: 0 }, [stop('0', a), stop('1', b2)]);
-    const defs = svgEl('defs', {}, [svgEl('filter', { id: 'hb', x: '-50%', y: '-50%', width: '200%', height: '200%' }, [svgEl('feGaussianBlur', { stdDeviation: 42 })]), vgrad('fo', '#b81d0a', '#ff6a17'), vgrad('fm', '#ff7a16', '#ffc02e'), vgrad('fc', '#ffcf3a', '#fff3b0')]);
+    const defs = svgEl('defs', {}, [svgEl('radialGradient', { id: 'hg' }, [svgEl('stop', { offset: '0', 'stop-color': '#ff6a17', 'stop-opacity': 1 }), svgEl('stop', { offset: '.5', 'stop-color': '#ff6a17', 'stop-opacity': .6 }), svgEl('stop', { offset: '1', 'stop-color': '#ff6a17', 'stop-opacity': 0 })]), vgrad('fo', '#b81d0a', '#ff6a17'), vgrad('fm', '#ff7a16', '#ffc02e'), vgrad('fc', '#ffcf3a', '#fff3b0')]);
     const svg = svgEl('svg', { viewBox: '0 0 360 330', role: 'img', 'aria-label': 'Homecoming bonfire', style: 'overflow:visible' }, [defs]);
 
     const CX = 180, GY = 322, H = 13, P = 15, N = 16;
@@ -360,7 +367,7 @@ const Bonfire = {
     });
 
 
-    this.halo = svgEl('ellipse', { cx: CX, cy: 215, rx: 200, ry: 175, fill: '#ff6a17', filter: 'url(#hb)', opacity: 0, class: 'halo' });
+    this.halo = svgEl('ellipse', { cx: CX, cy: 215, rx: 230, ry: 200, fill: 'url(#hg)', opacity: 0, class: 'halo' });
     svg.append(this.halo);
     const tower = svgEl('g', { class: 'tower' });
 
@@ -454,7 +461,8 @@ const Bonfire = {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const R = Math.random, TAU = Math.PI * 2, W = root.offsetWidth || 400;
     const cols = ['#ffe08a', '#ffc04a', '#ff9a2e', '#ff7a1a', '#fff1b8'];
-    const NS = 210;
+    const LITE = window.matchMedia('(max-width: 980px), (pointer: coarse)').matches;
+    const NS = LITE ? 55 : 210;
     for (let i = 0; i < NS; i++) {
       const size = 1.5 + R() * 2.6, c = cols[Math.floor(R() * cols.length)];
       const e = el('span', { class: 'spark' });
@@ -463,7 +471,7 @@ const Bonfire = {
       e.style.width = e.style.height = size.toFixed(1) + 'px';
       e.style.background = c; e.style.color = c;
       layer.append(e);
-      this.sparks.push({ el: e, step: i < 42 ? 0 : 1 + Math.floor(((i - 42) / (NS - 42)) * 5) });
+      this.sparks.push({ el: e, step: i < NS * .2 ? 0 : 1 + Math.floor(((i - NS * .2) / (NS * .8)) * 5) });
       const rise = (0.55 + R() * 0.5) * ((root.closest('.stage') || document.body).clientHeight || 800), a1 = 18 + R() * 34, f1 = .8 + R() * 1.1, p1 = R() * TAU, drift = (R() - .5) * 90, fl = 4 + R() * 5, flp = R() * TAU;
       const n = 30, pts = [];
       for (let k = 0; k <= n; k++) {
@@ -483,7 +491,8 @@ const Bonfire = {
     this.embers = [];
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const colors = ['#ff9a2e', '#ffb347', '#ff7a1a', '#ffd36a', '#ff5a1f', '#ff8a3d', '#ffc15e'];
-    const NE = 390, R = Math.random, TAU = Math.PI * 2;
+    const LITE = window.matchMedia('(max-width: 980px), (pointer: coarse)').matches;
+    const NE = LITE ? 110 : 390, R = Math.random, TAU = Math.PI * 2;
     for (let i = 0; i < NE; i++) {
       const size = 1.8 + R() * 3.2;
       const c = colors[Math.floor(R() * colors.length)];
@@ -492,7 +501,7 @@ const Bonfire = {
       e.style.width = e.style.height = size.toFixed(1) + 'px';
       e.style.background = c; e.style.color = c;
       layer.append(e);
-      const step = i < 114 ? 0 : 1 + Math.floor(((i - 114) / (NE - 114)) * 5);
+      const step = i < NE * .29 ? 0 : 1 + Math.floor(((i - NE * .29) / (NE * .71)) * 5);
       this.embers.push({ el: e, step });
       if (reduce) { e.style.opacity = '.4'; e.style.bottom = (R() * 40) + '%'; continue; }
       // one smooth path: gentle sway on two slow waves, a steady drift up that eases, no stop-and-go

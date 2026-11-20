@@ -447,3 +447,14 @@ body[data-page="home"] .banner-spacer{scroll-snap-align:start}
 }
 
 .stage.card-wait .stage-right{visibility:hidden}
+
+/* phones / touch: drop the expensive glow filters and shadows, and rest the flame wobble while scrolling */
+@media (max-width:980px),(pointer:coarse){
+  .bonfire{filter:none}
+  .flames{filter:none}
+  .spark{box-shadow:0 0 7px 2px currentColor}
+  .ember2{box-shadow:none}
+  .fp,.photo-strip img{filter:drop-shadow(0 0 18px rgba(255,150,50,.5))}
+  .topbar{contain:layout style}
+  html.is-scrolling .tongue{animation-play-state:paused}
+}
