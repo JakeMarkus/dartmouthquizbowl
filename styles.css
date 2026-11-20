@@ -160,7 +160,7 @@ main{flex:1}
 .flame:not(.lit){transition:transform .3s ease-in,opacity .25s ease-in}
 .tongue{transform-box:fill-box;transform-origin:50% 100%;animation:lick var(--d,2s) ease-in-out infinite alternate;animation-delay:var(--dl,0s)}
 @keyframes lick{0%{transform:scale(1,.95) skewX(-1.5deg)}33%{transform:scale(.97,1.05) skewX(1.2deg)}66%{transform:scale(1.02,.97) skewX(-.8deg)}100%{transform:scale(.98,1.06) skewX(1.5deg)}}
-.glow,.interior{transition:opacity .5s ease .1s}
+.glow,.interior{transition:opacity .5s ease}
 .bonfire.collapsed .interior{opacity:0}
 .ember{opacity:0}
 .ember.on{animation:ember var(--d,3s) linear infinite;animation-delay:var(--dl,0s)}
@@ -170,7 +170,7 @@ main{flex:1}
   70%{opacity:.85}
   100%{opacity:0;transform:translate(var(--dx,0px),var(--dy,-260px)) scale(.4)}
 }
-.tier{transform-box:fill-box;transform-origin:50% 50%;transition:transform .9s cubic-bezier(.55,0,.9,.5) var(--dl,0s),opacity .6s ease 1s}
+.tier{transform-box:fill-box;transform-origin:50% 50%;transition:transform .9s cubic-bezier(.55,0,.9,.5),opacity .6s ease 1s}
 .bonfire.collapsed .flame{transform:scale(0)!important;opacity:0!important;transition:transform .35s ease-in,opacity .3s ease-in}
 .bonfire.collapsed .glow{opacity:0!important}
 .bonfire.collapsed .tier{transform:translate(var(--dx,0),var(--dy,0)) rotate(var(--rot,0deg))}

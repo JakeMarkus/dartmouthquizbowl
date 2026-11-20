@@ -85,7 +85,7 @@ function setupStageBackground(data) {
   let pos = 0;
   const pick = async () => photos[pos++ % photos.length];
 
-  const DUR = 10500, DUR_NARROW = 13000;                           // vertical mode: photos stay a shorter time
+  const DUR = 9000, DUR_NARROW = 6000;                           // vertical mode: photos stay a shorter time
   const isNarrow = () => window.matchMedia('(max-width: 980px)').matches;
   const spawn = async () => {
     const dur = isNarrow() ? DUR_NARROW : DUR;
@@ -367,7 +367,7 @@ const Bonfire = {
     tower.append(sign);
     svg.append(tower);
     // a picture frame that sits on the logs but behind the flames (used in vertical mode)
-    this.photoRect = svgEl('rect', { fill: '#fff' });
+    this.photoRect = svgEl('rect', { fill: 'none' });
     this.photoImg = svgEl('image', { preserveAspectRatio: 'none' });
     this.photoG = svgEl('g', { class: 'bf-photo', 'aria-hidden': 'true' }, [this.photoRect, this.photoImg]);
     this.photoG.style.opacity = '0';
@@ -390,7 +390,7 @@ const Bonfire = {
     const im = new Image();
     im.onload = () => {
       const scale = (this.root && this.root.offsetWidth ? this.root.offsetWidth : 360) / 360;
-      const BX = 180, BY = 76, BW = Math.min(264, (window.innerWidth - 28) / scale), BH = 140, pad = 4;   // keep the frame on screen          // upper half of the bonfire, just under the DSQBT plaque
+      const BX = 180, BY = 76, BW = Math.min(300, (window.innerWidth - 8) / scale), BH = 160, pad = 0;   // no frame; keep it on screen          // upper half of the bonfire, just under the DSQBT plaque
       const r = im.naturalWidth / im.naturalHeight;
       let w = BW, h = w / r; if (h > BH) { h = BH; w = h * r; }
       const x = BX - w / 2, y = BY + (BH - h) / 2;
@@ -651,7 +651,7 @@ function handleAnswer(btn, chosen, correct, card, container) {
     if (streak % CYCLE === 0) {
       // full blaze, then it comes crashing down; the quiz carries on
       Bonfire.setStep(CYCLE - 1);
-      setTimeout(() => Bonfire.collapse(), 500);
+      Bonfire.collapse();
     } else {
       Bonfire.setStep(streak % CYCLE);
     }
