@@ -91,7 +91,14 @@ function setupStageBackground(data) {
     const dur = isNarrow() ? DUR_NARROW : DUR;
     const src = await pick();
     if (!src) return;
-    if (isNarrow()) { Bonfire.showPhoto(src, dur); return; }        // vertical mode: the picture sits on the bonfire itself
+    if (isNarrow()) {                                               // vertical mode: the picture fades in and out in its own section
+      const strip = document.getElementById('stripImg');
+      if (!strip) return;
+      strip.classList.remove('on');
+      strip.onload = () => { strip.classList.add('on'); setTimeout(() => strip.classList.remove('on'), dur - 700); };
+      strip.src = src;
+      return;
+    }
     const sh = stage.getBoundingClientRect();
     const headEl = stage.querySelector('.quiz-head');
     const headTop = headEl ? headEl.getBoundingClientRect().top - sh.top : sh.height * 0.6;
@@ -126,7 +133,7 @@ function setupStageBackground(data) {
     img.src = src;
   };
   let timer = 0;
-  const gap = () => isNarrow() ? DUR_NARROW + 1500 : DUR - 1900;   // vertical mode: leave the fire visible between photos
+  const gap = () => isNarrow() ? DUR_NARROW + 600 : DUR - 1900;   // vertical mode: leave the fire visible between photos
   const loop = () => { spawn(); timer = setTimeout(loop, gap()); };
   loop();
 
@@ -136,6 +143,7 @@ function setupStageBackground(data) {
   window.matchMedia('(max-width: 980px)').addEventListener('change', () => {
     root.querySelectorAll('.fp').forEach(f => { f.getAnimations().forEach(a => a.cancel()); f.remove(); });
     Bonfire.hidePhoto(1);
+    const si = document.getElementById('stripImg'); if (si) si.classList.remove('on');
     clearTimeout(timer);
     timer = setTimeout(loop, 1200);
   });
