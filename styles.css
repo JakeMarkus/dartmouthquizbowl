@@ -352,7 +352,7 @@ body[data-page="home"] .footer{margin-top:0}
   .contact-layout{grid-template-columns:1fr}
 }
 @media (max-width:640px){
-  .quiz-choices{grid-template-columns:1fr}
+  .quiz-choices{grid-template-columns:1fr 1fr}
   .quiz-card{padding:22px 18px 20px}
   .wrap{padding:0 18px}
   .facts li{grid-template-columns:1fr;gap:4px}
