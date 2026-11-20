@@ -51,6 +51,7 @@ function setupBigBanner() {
   const spacer = document.querySelector('.banner-spacer');
   if (!bar || !spacer) return;
   const root = document.documentElement;
+  root.classList.add('reel');                                       // home page only: enables the paging/snap rules
   const update = () => {
     const small = parseFloat(getComputedStyle(root).getPropertyValue('--head-h')) || 64;
     const big = spacer.offsetHeight;
