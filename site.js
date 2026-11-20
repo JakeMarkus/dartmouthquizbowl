@@ -108,15 +108,15 @@ function setupStageBackground(data) {
     fig.style.top = cy + 'px';
     root.append(fig);
     img.onload = () => {
-      if (reduce) { fig.style.opacity = '.86'; fig.style.transform = 'translate(-50%,-50%)'; setTimeout(() => fig.remove(), dur); return; }
+      if (reduce) { fig.style.opacity = '1'; fig.style.transform = 'translate(-50%,-50%)'; setTimeout(() => fig.remove(), dur); return; }
       const startY = sh.height - cy + 80;                           // from below the bottom edge
       const T = (x, y, s, r) => `translate(-50%,-50%) translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${s}) rotate(${r.toFixed(2)}deg)`;
       const kf = [{ transform: T(0, startY, .1, -3), opacity: 0, offset: 0, easing: 'cubic-bezier(.2,.7,.2,1)' },
-                  { transform: T(0, 0, 1, 0), opacity: .86, offset: .2 }];
+                  { transform: T(0, 0, 1, 0), opacity: 1, offset: .2 }];
       const n = 9, ph = Math.random() * 6.28;
       for (let k = 1; k <= n; k++) {                                // the hover: a teeny bit of wobble
         const t = k / n;
-        kf.push({ transform: T(Math.sin(ph + t * 5) * 5, Math.cos(ph + t * 4) * 5, 1, Math.sin(ph + t * 3) * 1.1), opacity: .86, offset: .2 + t * .58 });
+        kf.push({ transform: T(Math.sin(ph + t * 5) * 5, Math.cos(ph + t * 4) * 5, 1, Math.sin(ph + t * 3) * 1.1), opacity: 1, offset: .2 + t * .58 });
       }
       kf.push({ transform: T(Math.sin(ph) * 14, -150, 1.12, 2), opacity: 0, offset: 1, easing: 'ease-in' });
       const anim = fig.animate(kf, { duration: dur, easing: 'linear', fill: 'forwards' });

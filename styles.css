@@ -423,7 +423,7 @@ body[data-page="home"] .banner-sub{display:block}
 /* ── floating photos ── */
 .float-photos{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
 .fp{position:absolute;left:50%;margin:0;transform:translate(-50%,-50%) scale(.1);opacity:0;will-change:transform,opacity;
-  padding:6px;background:rgba(255,255,255,.96);box-shadow:0 18px 50px rgba(0,0,0,.5)}
+  padding:0;background:none;box-shadow:none;filter:drop-shadow(0 0 22px rgba(255,150,50,.5)) drop-shadow(0 0 60px rgba(255,120,30,.35))}
 .fp img{display:block;max-width:100%;width:auto;height:auto;object-fit:contain}
 /* the first screen: banner + game fit on one screen */
 body[data-page="home"]{--banner-big:clamp(190px,25vh,280px)}
