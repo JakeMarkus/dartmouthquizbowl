@@ -407,7 +407,7 @@ body[data-page="home"] .banner-sub{position:absolute;left:var(--wp);bottom:30px;
 .banner-sub{display:none}
 body[data-page="home"] .banner-sub{display:block}
 @media (max-width:860px){
-  body[data-page="home"] .nav{top:var(--head-h)}
+  body[data-page="home"] .nav{top:var(--head-h);height:auto;margin-left:0}
 }
 @media (max-width:640px){body[data-page="home"]{--wp:18px}}
 @media (max-width:640px){
