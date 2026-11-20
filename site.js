@@ -144,6 +144,21 @@ function setupStageBackground(data) {
     img.onerror = () => fig.remove();
     img.src = src;
   };
+
+  // vertical mode: the trivia card stays hidden until the first swipe down, then pops up
+  const vmq = window.matchMedia('(max-width: 980px)');
+  let cardShown = false;
+  const syncCard = () => stage.classList.toggle('card-wait', vmq.matches && !cardShown);
+  const revealCard = () => {
+    if (cardShown || !vmq.matches || window.scrollY < 40) return;
+    cardShown = true; syncCard();
+    const sr = stage.querySelector('.stage-right');
+    if (sr && !reduce) sr.animate([{ opacity: 0, transform: 'translateY(28px) scale(.94)' }, { opacity: 1, transform: 'none' }], { duration: 450, easing: 'cubic-bezier(.2,.8,.3,1)' });
+  };
+  vmq.addEventListener('change', syncCard);
+  window.addEventListener('scroll', revealCard, { passive: true });
+  syncCard();
+
   let timer = 0;
   const gap = () => isNarrow() ? DUR_NARROW + 600 : DUR - 1900;   // vertical mode: leave the fire visible between photos
   const loop = () => { spawn(); timer = setTimeout(loop, gap()); };
@@ -602,24 +617,15 @@ function positionBonfire() {
   const fire = document.getElementById('bonfire'), col = document.querySelector('.stage-left');
   if (!fire || !col) return;
   if (!window.matchMedia('(min-width: 981px)').matches) {
-    // vertical mode: the bottom log rests on the green top of the card; plaque near the top of the stage
+    // vertical mode: the pictures sit across the top, the fire right beneath them (sign a small gap under the pictures)
     fire.style.left = '';
-    const stage = document.getElementById('stage'), card = document.getElementById('quizContainer');
-    if (stage && card) {
-      // size it for the short question (a ~232px card), every time, whatever the card currently holds;
-      // taller cards just cover the bottom of the fire
-      const sr = stage.getBoundingClientRect();
-      const minH = parseFloat(getComputedStyle(stage).minHeight) || sr.height;
-      const strip = document.getElementById('photoStrip');
-      const top = strip ? strip.offsetHeight + 10 : 12;                // the fire's sign sits a small gap under the pictures
-      const refTop = Math.max(240, minH - 232);
-      const w = Math.max(200, Math.min(900, window.innerWidth * 1.5, (refTop - top) / 0.8));
-      fire.style.setProperty('--fw', Math.round(w) + 'px');
-      fire.style.setProperty('--fb', Math.round(sr.height - refTop - w * 0.03) + 'px');
-    }
+    const zone = Math.max(240, Math.min(430, window.innerWidth * 0.78));   // matches --zone in the stylesheet
+    const w = Math.max(200, Math.min(900, window.innerWidth * 1.5, (zone - 12) / 0.8));
+    fire.style.setProperty('--fw', Math.round(w) + 'px');
+    fire.style.setProperty('--ft', Math.round(-w * 0.089) + 'px');   // positioned inside the grid, which starts a 10px gap under the pictures
     return;
   }
-  fire.style.removeProperty('--fw'); fire.style.removeProperty('--fb');
+  fire.style.removeProperty('--fw'); fire.style.removeProperty('--ft');
   fire.style.left = Math.round(col.getBoundingClientRect().width / 2 - fire.offsetWidth / 2) + 'px';
 }
 
