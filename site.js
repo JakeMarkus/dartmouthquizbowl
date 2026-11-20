@@ -583,7 +583,7 @@ function positionBonfire() {
     const stage = document.getElementById('stage'), card = document.getElementById('quizContainer');
     if (stage && card) {
       const sr = stage.getBoundingClientRect(), cardTop = card.getBoundingClientRect().top - sr.top;
-      const w = Math.max(200, Math.min(700, window.innerWidth * 1.15, (cardTop - 10) / 0.8));
+      const w = Math.max(200, Math.min(900, window.innerWidth * 1.5, (cardTop - 12) / 0.798));   // as big as fits, ~12px between the plaque and the banner
       fire.style.setProperty('--fw', Math.round(w) + 'px');
       fire.style.setProperty('--fb', Math.round(sr.height - cardTop - w * 0.03) + 'px');
     }
@@ -640,18 +640,13 @@ function handleAnswer(btn, chosen, correct, card, container) {
     streak++;
     btn.classList.add('quiz-choice--correct');
     setStreakEl(card, streak, prev);
-    // vertical mode: the photo fades out first, so hold the fire back half a second to let people adjust
-    const lag = window.matchMedia('(max-width: 980px)').matches ? 500 : 0;
-    const fireStep = streak;
-    setTimeout(() => {
-      if (fireStep % CYCLE === 0) {
-        // full blaze, then it comes crashing down; the quiz carries on
-        Bonfire.setStep(CYCLE - 1);
-        setTimeout(() => Bonfire.collapse(), 500);
-      } else {
-        Bonfire.setStep(fireStep % CYCLE);
-      }
-    }, lag);
+    if (streak % CYCLE === 0) {
+      // full blaze, then it comes crashing down; the quiz carries on
+      Bonfire.setStep(CYCLE - 1);
+      setTimeout(() => Bonfire.collapse(), 500);
+    } else {
+      Bonfire.setStep(streak % CYCLE);
+    }
     popButton(container, 'Next question →', false, () => showNextQuestion(container));
   } else {
     streak = 0;
