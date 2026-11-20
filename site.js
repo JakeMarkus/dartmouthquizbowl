@@ -113,7 +113,8 @@ function setupStageBackground(data) {
       strip.onload = () => {
         if (strip.naturalWidth < strip.naturalHeight && retries++ < photos.length) { landscape.set(pick2, false); spawn(); return; }
         retries = 0; landscape.set(pick2, true);
-        strip.classList.add('on'); setTimeout(() => strip.classList.remove('on'), dur - 700);
+        strip.style.setProperty('--stay', (dur - 700) + 'ms'); strip.classList.remove('gone'); void strip.offsetWidth;
+        strip.classList.add('on'); setTimeout(() => { strip.classList.remove('on'); strip.classList.add('gone'); }, dur - 700);
       };
       strip.src = pick2;
       return;
@@ -177,7 +178,7 @@ function setupStageBackground(data) {
   window.matchMedia('(max-width: 980px)').addEventListener('change', () => {
     root.querySelectorAll('.fp').forEach(f => { f.getAnimations().forEach(a => a.cancel()); f.remove(); });
     Bonfire.hidePhoto(1);
-    const si = document.getElementById('stripImg'); if (si) si.classList.remove('on');
+    const si = document.getElementById('stripImg'); if (si) { si.classList.remove('on'); si.classList.add('gone'); }
     clearTimeout(timer);
     timer = setTimeout(loop, 1200);
   });
