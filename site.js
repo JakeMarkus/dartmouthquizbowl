@@ -842,13 +842,21 @@ function setupAlumniKey(current, makeCard) {
       name: 'Matt Forster',
       title: 'Throne for Foreign Wars',
       bio: 'A motorcyle riding US Army Veteran, Matt is in in close contact with the Iranian embassy (pictured), the frontlines, and your mother. Whether his \'Quizbollah\' headband is an affiliation or a captured battle prize, no-one knows. May God have mercy upon poor Conall\'s soul.',
-      photo: 'https://aura.dartmouthquizbowl.org/Conall.webp'
+      photo: 'https://aura.dartmouthquizbowl.org/Matt_WAR.webp'
+    });
+
+    const card3 = makeCard({
+      name: 'Daniel Cannon',
+      title: 'Foco Beast',
+      bio: 'A true Renaissance man, DJ Canon is a fierce intellect, journalist, fashionista, and rising musician. A native from the bustling metropolis of Council Bluffs, he is the club\'s official representative from the great state of Iowa.',
+      photo: 'https://aura.dartmouthquizbowl.org/IMG_4013.webp'
     });
 
     card.dataset.secretPerson = 'lumina';
     card.classList.add('person--secret');
     current.append(card);
     current.append(card2);
+    current.append(card3);
   };
 
   const updateSelectedLetter = () => {
