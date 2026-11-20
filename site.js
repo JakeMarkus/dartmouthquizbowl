@@ -320,6 +320,7 @@ const Bonfire = {
       t.style.setProperty('--dl', (-Math.random() * 3).toFixed(2) + 's');
       const f = svgEl('g', { class: 'flame' }, [t]);
       flames.append(svgEl('g', { transform: `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${((Math.random() - .5) * 6).toFixed(1)}) scale(${(s * (.75 + Math.random() * .3)).toFixed(2)} ${s.toFixed(2)})` }, [f]));
+      if (step === 4) f.classList.add('last');   // the final layer, lit at streak four
       return { el: f, step };
     });
 

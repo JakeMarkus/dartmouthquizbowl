@@ -156,6 +156,7 @@ main{flex:1}
 .bonfire svg{display:block;width:100%;height:auto;overflow:visible}
 .flame{transform-box:fill-box;transform-origin:50% 100%;transform:scale(.15);opacity:0;transition:transform .5s ease-out,opacity .3s ease}
 .flame.lit{transform:scale(1);opacity:1}
+.flame.last.lit{opacity:.5}
 .flame:not(.lit){transition:transform .3s ease-in,opacity .25s ease-in}
 .tongue{transform-box:fill-box;transform-origin:50% 100%;animation:lick var(--d,2s) ease-in-out infinite alternate;animation-delay:var(--dl,0s)}
 @keyframes lick{0%{transform:scale(1,.95) skewX(-1.5deg)}33%{transform:scale(.97,1.05) skewX(1.2deg)}66%{transform:scale(1.02,.97) skewX(-.8deg)}100%{transform:scale(.98,1.06) skewX(1.5deg)}}
