@@ -389,7 +389,8 @@ const Bonfire = {
     const g = this.photoG; if (!g) return;
     const im = new Image();
     im.onload = () => {
-      const BX = 180, BY = 76, BW = 264, BH = 140, pad = 4;          // upper half of the bonfire, just under the DSQBT plaque
+      const scale = (this.root && this.root.offsetWidth ? this.root.offsetWidth : 360) / 360;
+      const BX = 180, BY = 76, BW = Math.min(264, (window.innerWidth - 28) / scale), BH = 140, pad = 4;   // keep the frame on screen          // upper half of the bonfire, just under the DSQBT plaque
       const r = im.naturalWidth / im.naturalHeight;
       let w = BW, h = w / r; if (h > BH) { h = BH; w = h * r; }
       const x = BX - w / 2, y = BY + (BH - h) / 2;
@@ -583,10 +584,14 @@ function positionBonfire() {
     fire.style.left = '';
     const stage = document.getElementById('stage'), card = document.getElementById('quizContainer');
     if (stage && card) {
-      const sr = stage.getBoundingClientRect(), cardTop = card.getBoundingClientRect().top - sr.top;
-      const w = Math.max(200, Math.min(900, window.innerWidth * 1.5, (cardTop - 12) / 0.798));   // as big as fits, ~12px between the plaque and the banner
+      // size it for the short question (a ~232px card), every time, whatever the card currently holds;
+      // taller cards just cover the bottom of the fire
+      const sr = stage.getBoundingClientRect();
+      const minH = parseFloat(getComputedStyle(stage).minHeight) || sr.height;
+      const refTop = Math.max(240, minH - 232);
+      const w = Math.max(200, Math.min(900, window.innerWidth * 1.5, (refTop - 12) / 0.8));
       fire.style.setProperty('--fw', Math.round(w) + 'px');
-      fire.style.setProperty('--fb', Math.round(sr.height - cardTop - w * 0.03) + 'px');
+      fire.style.setProperty('--fb', Math.round(sr.height - refTop - w * 0.03) + 'px');
     }
     return;
   }
