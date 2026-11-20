@@ -460,3 +460,16 @@ body[data-page="home"] .banner-spacer{scroll-snap-align:start}
   .topbar{contain:layout style}
   html.is-scrolling .tongue{animation-play-state:paused}
 }
+
+/* vertical mode: reel-style paging. Page 1 is the big banner + pictures + bonfire; one swipe brings the card up and
+   shrinks the banner; the next swipe goes to "What is Quizbowl?", and so on. */
+@media (max-width:980px){
+  html{scroll-snap-type:y mandatory}
+  body[data-page="home"] .stage{scroll-snap-align:none}
+  body[data-page="home"] .banner-spacer{scroll-snap-align:start;scroll-snap-stop:always}
+  body[data-page="home"] .snap-card{display:block;height:0;scroll-snap-align:end;scroll-snap-stop:always}   /* sits at the bottom of the game: the card page */
+  body[data-page="home"] .about,body[data-page="home"] .collage-section{scroll-snap-align:start;scroll-margin-top:var(--head-h);scroll-snap-stop:always}
+  .footer{scroll-snap-align:end}
+}
+
+.snap-card{display:none}
