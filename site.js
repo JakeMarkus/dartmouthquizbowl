@@ -649,13 +649,14 @@ function handleAnswer(btn, chosen, correct, card, container) {
     btn.classList.add('quiz-choice--correct');
     setStreakEl(card, streak, prev);
     if (streak % CYCLE === 0) {
-      // full blaze, then it comes crashing down; the quiz carries on
+      // full blaze, then it comes crashing down; no Next button until the collapse has played out
       Bonfire.setStep(CYCLE - 1);
-      Bonfire.collapse();
+      setTimeout(() => Bonfire.collapse(), 500);
+      setTimeout(() => popButton(container, 'Next question →', false, () => showNextQuestion(container)), 2600);
     } else {
       Bonfire.setStep(streak % CYCLE);
+      popButton(container, 'Next question →', false, () => showNextQuestion(container));
     }
-    popButton(container, 'Next question →', false, () => showNextQuestion(container));
   } else {
     streak = 0;
     btn.classList.add('quiz-choice--wrong');
