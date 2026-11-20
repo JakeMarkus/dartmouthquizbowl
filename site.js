@@ -51,7 +51,6 @@ function setupBigBanner() {
   const spacer = document.querySelector('.banner-spacer');
   if (!bar || !spacer) return;
   const root = document.documentElement;
-  root.classList.add('reel');                                       // home page only: enables the paging/snap rules
   const update = () => {
     const small = parseFloat(getComputedStyle(root).getPropertyValue('--head-h')) || 64;
     const big = spacer.offsetHeight;
@@ -62,10 +61,8 @@ function setupBigBanner() {
     bar.style.setProperty('--sub', Math.max(0, 1 - p * 3).toFixed(3));
   };
   update();
-  let ticking = false, idle = 0;
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    root.classList.add('is-scrolling');
-    clearTimeout(idle); idle = setTimeout(() => root.classList.remove('is-scrolling'), 160);
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(() => { ticking = false; update(); });
@@ -832,9 +829,18 @@ function setupAlumniKey(current, makeCard) {
       bio: 'After narrowly coming 2nd in the 2026 presidential election, Conall decided to take it easy and achieve something much easier than running this batty club: enduring peace in the Middle East. With expeditions scheduled to Afganistan, the West Bank, and Yemen, we are confident Conall will build more bridges between our leadership and the world\'s.',
       photo: 'https://aura.dartmouthquizbowl.org/Conall.webp'
     });
+
+    const card2 = makeCard({
+      name: 'Matt Forster',
+      title: 'Throne for Foreign Wars',
+      bio: 'A motorcyle riding US Army Veteran, Matt is in in close contact with the Iranian embassy (pictured), the frontlines, and your mother. Whether his \'Quizbollah\' headband is an affiliation or a captured battle prize, no-one knows. May God have mercy upon poor Conall\'s soul.',
+      photo: 'https://aura.dartmouthquizbowl.org/Conall.webp'
+    });
+
     card.dataset.secretPerson = 'lumina';
     card.classList.add('person--secret');
     current.append(card);
+    current.append(card2);
   };
 
   const updateSelectedLetter = () => {
