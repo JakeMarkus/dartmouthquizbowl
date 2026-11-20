@@ -83,6 +83,8 @@ function setupStageBackground(data) {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let pos = 0;
+  let retries = 0;
+  const landscape = new Map();                                      // src -> true/false once its shape is known
   const pick = async () => photos[pos++ % photos.length];
 
   const DUR = 9000, DUR_NARROW = 6000;                           // vertical mode: photos stay a shorter time
@@ -95,8 +97,18 @@ function setupStageBackground(data) {
       const strip = document.getElementById('stripImg');
       if (!strip) return;
       strip.classList.remove('on');
-      strip.onload = () => { strip.classList.add('on'); setTimeout(() => strip.classList.remove('on'), dur - 700); };
-      strip.src = src;
+      let pick2 = src;                                              // horizontal pictures only here
+      for (let t = 0; t < photos.length; t++) {
+        const known = landscape.get(pick2);
+        if (known !== false) break;
+        pick2 = photos[pos++ % photos.length];
+      }
+      strip.onload = () => {
+        if (strip.naturalWidth < strip.naturalHeight && retries++ < photos.length) { landscape.set(pick2, false); spawn(); return; }
+        retries = 0; landscape.set(pick2, true);
+        strip.classList.add('on'); setTimeout(() => strip.classList.remove('on'), dur - 700);
+      };
+      strip.src = pick2;
       return;
     }
     const sh = stage.getBoundingClientRect();
@@ -598,8 +610,10 @@ function positionBonfire() {
       // taller cards just cover the bottom of the fire
       const sr = stage.getBoundingClientRect();
       const minH = parseFloat(getComputedStyle(stage).minHeight) || sr.height;
+      const strip = document.getElementById('photoStrip');
+      const top = strip ? strip.offsetHeight + 10 : 12;                // the fire's sign sits a small gap under the pictures
       const refTop = Math.max(240, minH - 232);
-      const w = Math.max(200, Math.min(900, window.innerWidth * 1.5, (refTop - 12) / 0.8));
+      const w = Math.max(200, Math.min(900, window.innerWidth * 1.5, (refTop - top) / 0.8));
       fire.style.setProperty('--fw', Math.round(w) + 'px');
       fire.style.setProperty('--fb', Math.round(sr.height - refTop - w * 0.03) + 'px');
     }
