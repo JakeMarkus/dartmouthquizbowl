@@ -85,7 +85,7 @@ function setupStageBackground(data) {
   let pos = 0;
   const pick = async () => photos[pos++ % photos.length];
 
-  const DUR = 10500, DUR_NARROW = 7000;                           // vertical mode: photos stay a shorter time
+  const DUR = 10500, DUR_NARROW = 13000;                           // vertical mode: photos stay a shorter time
   const isNarrow = () => window.matchMedia('(max-width: 980px)').matches;
   const spawn = async () => {
     const dur = isNarrow() ? DUR_NARROW : DUR;
@@ -126,7 +126,7 @@ function setupStageBackground(data) {
     img.src = src;
   };
   let timer = 0;
-  const gap = () => isNarrow() ? DUR_NARROW + 3500 : DUR - 1900;   // vertical mode: leave the fire visible between photos
+  const gap = () => isNarrow() ? DUR_NARROW + 1500 : DUR - 1900;   // vertical mode: leave the fire visible between photos
   const loop = () => { spawn(); timer = setTimeout(loop, gap()); };
   loop();
 
@@ -284,7 +284,7 @@ const Bonfire = {
     const stop = (o, c) => svgEl('stop', { offset: o, 'stop-color': c });
     const vgrad = (id, a, b2) => svgEl('linearGradient', { id, x1: 0, y1: 1, x2: 0, y2: 0 }, [stop('0', a), stop('1', b2)]);
     const defs = svgEl('defs', {}, [svgEl('filter', { id: 'hb', x: '-50%', y: '-50%', width: '200%', height: '200%' }, [svgEl('feGaussianBlur', { stdDeviation: 42 })]), vgrad('fo', '#b81d0a', '#ff6a17'), vgrad('fm', '#ff7a16', '#ffc02e'), vgrad('fc', '#ffcf3a', '#fff3b0')]);
-    const svg = svgEl('svg', { viewBox: '0 0 360 330', role: 'img', 'aria-label': 'Homecoming bonfire' }, [defs]);
+    const svg = svgEl('svg', { viewBox: '0 0 360 330', role: 'img', 'aria-label': 'Homecoming bonfire', style: 'overflow:visible' }, [defs]);
 
     const CX = 180, GY = 322, H = 13, P = 15, N = 16;
     const wAt = i => 92 - i * (30 / 15);
@@ -399,7 +399,9 @@ const Bonfire = {
       this.photoImg.setAttribute('href', src);
       ['x', 'y', 'width', 'height'].forEach((k, i) => this.photoImg.setAttribute(k, [x, y, w, h][i]));
       if (this.photoAnim) this.photoAnim.cancel();
-      this.photoAnim = g.animate([{ opacity: 0, offset: 0 }, { opacity: 1, offset: .08 }, { opacity: 1, offset: .92 }, { opacity: 0, offset: 1 }],
+      // drift slowly from the left edge of the screen to the right edge, in front of the logs
+      const half = window.innerWidth / 2 / scale + w / 2 + pad + 6;
+      this.photoAnim = g.animate([{ opacity: 1, transform: `translate(${(-half).toFixed(1)}px, 0px)` }, { opacity: 1, transform: `translate(${half.toFixed(1)}px, 0px)` }],
         { duration: dur, easing: 'linear', fill: 'forwards' });
     };
     im.src = src;
